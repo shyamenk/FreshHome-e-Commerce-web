@@ -1,0 +1,184 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.String
+  access_token      String? @db.String
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.String
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  sessionToken String   @unique
+  userId       String   @db.ObjectId
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  name          String?
+  email         String?        @unique
+  emailVerified DateTime?
+  image         String?
+  role          Role           @default(USER)
+  accounts      Account[]
+  sessions      Session[]
+  userAddress   UserAddress[]
+  userPayment   UserPayment[]
+  order         Order[]
+  cartSession   Cart_Session[]
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model VerificationToken {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model UserAddress {
+  id           String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId       String  @db.ObjectId
+  addressLine1 String
+  addressLine2 String?
+  city         String
+  zipCode      Int
+  country      String
+  telephone    Int?
+  mobile       Int
+  user         User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model UserPayment {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String    @db.ObjectId
+  type      String
+  provider  String
+  accountNo Int
+  expiry    DateTime?
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Product {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String
+  price       Int
+  quantity    Int
+  imageURL    String
+  discount    Int
+  createdAt   DateTime?
+  modifiedAt  DateTime?
+  deletedAt   DateTime?
+
+  Category   Category? @relation(fields: [categoryId], references: [id])
+  categoryId String?   @db.ObjectId
+
+  orderItem OrderItems[]
+  cartItem  Cart_Item[]
+}
+
+model Category {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String
+  createdAt   DateTime?
+  modifiedAt  DateTime?
+  deletedAt   DateTime?
+  product     Product[]
+}
+
+model Order {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  total      Int
+  createdAt  DateTime?
+  modifiedAt DateTime?
+
+  user   User?   @relation(fields: [userId], references: [id])
+  userId String? @db.ObjectId
+
+  orderItems OrderItems[]
+  payment    Payment[]
+}
+
+model OrderItems {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  quantity   Int
+  createdAt  DateTime?
+  modifiedAt DateTime?
+
+  order   Order?  @relation(fields: [orderId], references: [id])
+  orderId String? @db.ObjectId
+
+  Product   Product? @relation(fields: [productId], references: [id])
+  productId String?  @db.ObjectId
+}
+
+model Payment {
+  id         String      @id @default(auto()) @map("_id") @db.ObjectId
+  amount     Int
+  provider   String
+  status     OrderStatus
+  createdAt  DateTime?
+  modifiedAt DateTime?
+
+  Order   Order?  @relation(fields: [orderId], references: [id])
+  orderId String? @db.ObjectId
+}
+
+model Cart_Session {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  total      Int
+  createdAt  DateTime?
+  modifiedAt DateTime?
+
+  User   User?   @relation(fields: [userId], references: [id])
+  userId String? @db.ObjectId
+
+  cartItem Cart_Item[]
+}
+
+model Cart_Item {
+  id           String        @id @default(auto()) @map("_id") @db.ObjectId
+  quantity     Int
+  createdAt    DateTime?
+  modifiedAt   DateTime?
+  Cart_Session Cart_Session? @relation(fields: [sessionId], references: [id])
+  sessionId    String?       @db.ObjectId
+  Product      Product?      @relation(fields: [productId], references: [id])
+  productId    String?       @db.ObjectId
+}
+
+enum OrderStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
