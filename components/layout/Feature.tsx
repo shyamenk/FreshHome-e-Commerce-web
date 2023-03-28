@@ -1,30 +1,54 @@
-type Props = {}
+import Image from 'next/image'
+import useSWR from 'swr'
+import {Category, Product} from 'prisma/prisma-client/'
+import fetcher from 'util/fetcher'
+import {ErrorResponse} from 'types/error'
+import Link from 'next/link'
 
-export default function Feature({}: Props) {
+interface ProductImage {
+  imageURL: string
+}
+
+export interface CategoryWithImage {
+  id: number
+  name: string
+  product: [ProductImage]
+}
+export default function Feature() {
+  const {data, error, isLoading} = useSWR<CategoryWithImage[], ErrorResponse>(
+    'http://localhost:3000/api/category',
+    fetcher,
+  )
+
+  if (error) return <div>failed to load</div>
+
+  if (isLoading) return <div>loading...</div>
+
   return (
     <>
-      <div className="p-6 py-12 mb-4 text-gray-900 h-60 bg-secondary">
-        <div className="container mx-auto">
-          <div className="flex flex-col items-center justify-between lg:flex-row">
-            <h2 className="text-5xl font-bold tracking-tighter text-center text-white">
-              Up to
-              <br className="sm:hidden" />
-              50% Off
-            </h2>
-            <div className="py-2 space-x-2 text-center lg:py-0">
-              <span>Plus free shipping! Use code:</span>
-              <span className="text-lg font-bold">APPLET</span>
-            </div>
-            <a
-              href="#"
-              rel="noreferrer noopener"
-              className="block px-5 py-3 mt-4 text-gray-900 border border-gray-400 rounded-md lg:mt-0 bg-gray-50"
-            >
-              Shop Now
-            </a>
+      <section className="max-w-6xl py-6 mx-auto mt-4 bg-primary">
+        <h1 className="mb-8 text-4xl text-center text-secondary1 font-poppins">
+          Categories
+        </h1>
+        <div className="container flex flex-col justify-center p-4 mx-auto border rounded-lg">
+          <div className="grid grid-cols-1 gap-4 text-xl text-center font-poppins lg:grid-cols-4 sm:grid-cols-2">
+            {data?.map(category => (
+              <div key={category.id}>
+                <Link href={`categories/${category.name}`}>
+                  <Image
+                    className="object-cover w-full h-32 mb-3 cursor-pointer aspect-square"
+                    src={category.product[0].imageURL}
+                    alt=""
+                    width={100}
+                    height={100}
+                  />
+                  <h2>{category.name}</h2>
+                </Link>
+              </div>
+            ))}
           </div>
         </div>
-      </div>
+      </section>
     </>
   )
 }

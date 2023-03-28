@@ -9,8 +9,7 @@ interface IProduct {
   discount: number
   category: string
 }
-
-export async function getProducts<IProduct>() {
+export async function getProducts() {
   try {
     const products = await prisma.product.findMany({
       include: {

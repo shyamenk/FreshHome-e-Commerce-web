@@ -1,5 +1,5 @@
 import {NextApiRequest, NextApiResponse} from 'next'
-import {createProduct, getProductById, getProducts} from '@/lib/prisma/products'
+import {createProduct, getProducts} from '@/lib/prisma/products'
 
 export default async function handler(
   req: NextApiRequest,
