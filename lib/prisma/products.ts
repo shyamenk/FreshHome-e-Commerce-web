@@ -32,28 +32,26 @@ export async function createProduct(product: IProduct) {
         quantity: product.quantity,
         imageURL: product.imageURL,
         discount: product.discount,
-      },
-    })
-    const result = await prisma.category.create({
-      data: {
-        name: product.category,
-        description: product.description,
-        product: {
-          connect: {
-            id: newProduct.id,
+        Category: {
+          connectOrCreate: {
+            where: {name: product.category},
+            create: {name: product.category},
           },
         },
       },
     })
-    return {result}
+
+    return {newProduct}
   } catch (error) {
     return {error}
   }
 }
 export async function getProductById(id: string) {
   try {
-    const product = await prisma.product.findUnique({
-      where: {id},
+    const product = await prisma.product.findMany({
+      where: {
+        categoryId: id,
+      },
       include: {Category: true},
     })
     return {product}

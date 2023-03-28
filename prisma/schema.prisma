@@ -87,32 +87,23 @@ model UserPayment {
 }
 
 model Product {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   description String
   price       Int
   quantity    Int
   imageURL    String
   discount    Int
-  createdAt   DateTime?
-  modifiedAt  DateTime?
-  deletedAt   DateTime?
-
-  Category   Category? @relation(fields: [categoryId], references: [id])
-  categoryId String?   @db.ObjectId
-
-  orderItem OrderItems[]
-  cartItem  Cart_Item[]
+  Category    Category?    @relation(fields: [categoryId], references: [id])
+  categoryId  String?      @db.ObjectId
+  orderItem   OrderItems[]
+  cartItem    Cart_Item[]
 }
 
 model Category {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
-  description String
-  createdAt   DateTime?
-  modifiedAt  DateTime?
-  deletedAt   DateTime?
-  product     Product[]
+  id      String    @id @default(auto()) @map("_id") @db.ObjectId
+  name    String    @unique
+  product Product[]
 }
 
 model Order {

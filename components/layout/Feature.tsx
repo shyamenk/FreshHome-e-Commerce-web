@@ -1,9 +1,9 @@
 import Image from 'next/image'
 import useSWR from 'swr'
-import {Category, Product} from 'prisma/prisma-client/'
 import fetcher from 'util/fetcher'
 import {ErrorResponse} from 'types/error'
 import Link from 'next/link'
+import Spinner from '../shared/Spinner'
 
 interface ProductImage {
   imageURL: string
@@ -22,7 +22,7 @@ export default function Feature() {
 
   if (error) return <div>failed to load</div>
 
-  if (isLoading) return <div>loading...</div>
+  if (isLoading) return <Spinner />
 
   return (
     <>
@@ -34,7 +34,7 @@ export default function Feature() {
           <div className="grid grid-cols-1 gap-4 text-xl text-center font-poppins lg:grid-cols-4 sm:grid-cols-2">
             {data?.map(category => (
               <div key={category.id}>
-                <Link href={`categories/${category.name}`}>
+                <Link href={`categories/${category.id}`}>
                   <Image
                     className="object-cover w-full h-32 mb-3 cursor-pointer aspect-square"
                     src={category.product[0].imageURL}

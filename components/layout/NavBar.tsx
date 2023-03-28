@@ -90,7 +90,7 @@ const NavBar: React.FC = () => {
             <div className="flex flex-col h-full p-4">
               <div className="flex-grow ">
                 <Link
-                  href="/category"
+                  href="/categories"
                   className="block px-4 py-2 text-black hover:rounded-lg hover:bg-gray-200 lg:inline-block lg:mt-0"
                 >
                   Categories
@@ -127,7 +127,7 @@ const NavBar: React.FC = () => {
           >
             <div className="text-lg font-semibold lg:flex-grow">
               <Link
-                href="#"
+                href="/categories"
                 className="block mt-4 mr-4 text-gray-800 border-hover lg:inline-block lg:mt-0 hover:text-gray-600 hover:border-b-2"
               >
                 Categories
