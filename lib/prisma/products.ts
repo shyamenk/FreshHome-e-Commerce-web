@@ -48,13 +48,13 @@ export async function createProduct(product: IProduct) {
 }
 export async function getProductById(id: string) {
   try {
-    const product = await prisma.product.findMany({
+    const products = await prisma.product.findMany({
       where: {
         categoryId: id,
       },
       include: {Category: true},
     })
-    return {product}
+    return products
   } catch (error) {
     return {error}
   }

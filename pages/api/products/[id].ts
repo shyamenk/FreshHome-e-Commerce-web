@@ -9,12 +9,12 @@ export default async function handler(
 
   if (req.method === 'GET') {
     try {
-      const {product, error} = await getProductById(id as string)
-      if (error) {
-        return res.status(400).json({error})
-      } else {
-        return res.status(200).json({product})
-      }
+      const products = await getProductById(id as string)
+      // if (error) {
+      //   return res.status(400).json({error})
+      // } else {
+      return res.status(200).json(products)
+      // }
     } catch (error) {
       console.log(error)
     }
