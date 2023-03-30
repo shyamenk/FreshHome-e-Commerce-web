@@ -13,7 +13,7 @@ export async function getProducts() {
   try {
     const products = await prisma.product.findMany({
       include: {
-        Category: true,
+        category: true,
       },
     })
     return {products}
@@ -32,7 +32,7 @@ export async function createProduct(product: IProduct) {
         quantity: product.quantity,
         imageURL: product.imageURL,
         discount: product.discount,
-        Category: {
+        category: {
           connectOrCreate: {
             where: {name: product.category},
             create: {name: product.category},
@@ -52,7 +52,7 @@ export async function getProductById(id: string) {
       where: {
         categoryId: id,
       },
-      include: {Category: true},
+      include: {category: true},
     })
     return products
   } catch (error) {

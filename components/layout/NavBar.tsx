@@ -15,7 +15,7 @@ const NavBar: React.FC = () => {
     return <Spinner />
   }
 
-  // TODO:"Test Tod0"
+  // TODO:
 
   // if (status === 'unauthenticated') {
   //   return <h1>no access</h1>
@@ -96,10 +96,10 @@ const NavBar: React.FC = () => {
                   Categories
                 </Link>
                 <Link
-                  href="/services"
+                  href="/products"
                   className="block px-4 py-2 text-black hover:rounded-lg hover:bg-gray-200 lg:inline-block lg:mt-0"
                 >
-                  Service
+                  Products
                 </Link>
                 <Link
                   href="/contact"
@@ -133,19 +133,19 @@ const NavBar: React.FC = () => {
                 Categories
               </Link>
               <Link
-                href="/services"
+                href="/products"
                 className="block mt-4 mr-4 text-gray-800 border-hover lg:inline-block lg:mt-0 hover:text-gray-600 hover:border-b-2"
               >
-                Service
+                Products
               </Link>
               <Link
-                href="#"
+                href="/contact"
                 className="block mt-4 mr-4 text-gray-800 border-hover lg:inline-block lg:mt-0 hover:text-gray-600 hover:border-b-2"
               >
                 Contact
               </Link>
               <Link
-                href="#"
+                href="/about"
                 className="block mt-4 mr-4 text-gray-800 border-hover lg:inline-block lg:mt-0 hover:text-gray-600 hover:border-b-2"
               >
                 About

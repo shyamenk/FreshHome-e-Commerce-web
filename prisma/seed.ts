@@ -13,9 +13,7 @@ async function main() {
 
   // await prisma.product.deleteMany()
   // console.log('Deleted records in product table')
-
-  console.log('Seeding...')
-
+  console.log('Databse Seeding...')
   /// --------- Products ---------------
   for (let i = 0; i < fakerRounds; i++) {
     const res = await prisma.product.create({
@@ -26,13 +24,13 @@ async function main() {
         quantity: faker.datatype.number(100),
         imageURL: faker.image.food(640, 480, true),
         discount: faker.datatype.number(100),
-        Category: {
+        category: {
           connectOrCreate: {
             where: {
-              name: 'Dairy ',
+              name: 'Health Care ',
             },
             create: {
-              name: 'Dairy ',
+              name: 'Health Care ',
             },
           },
         },

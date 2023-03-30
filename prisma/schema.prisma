@@ -94,7 +94,7 @@ model Product {
   quantity    Int
   imageURL    String
   discount    Int
-  Category    Category?    @relation(fields: [categoryId], references: [id])
+  category    Category?    @relation(fields: [categoryId], references: [id])
   categoryId  String?      @db.ObjectId
   orderItem   OrderItems[]
   cartItem    Cart_Item[]
@@ -128,7 +128,7 @@ model OrderItems {
   order   Order?  @relation(fields: [orderId], references: [id])
   orderId String? @db.ObjectId
 
-  Product   Product? @relation(fields: [productId], references: [id])
+  product   Product? @relation(fields: [productId], references: [id])
   productId String?  @db.ObjectId
 }
 
@@ -140,7 +140,7 @@ model Payment {
   createdAt  DateTime?
   modifiedAt DateTime?
 
-  Order   Order?  @relation(fields: [orderId], references: [id])
+  order   Order?  @relation(fields: [orderId], references: [id])
   orderId String? @db.ObjectId
 }
 
@@ -150,21 +150,22 @@ model Cart_Session {
   createdAt  DateTime?
   modifiedAt DateTime?
 
-  User   User?   @relation(fields: [userId], references: [id])
+  user   User?   @relation(fields: [userId], references: [id])
   userId String? @db.ObjectId
 
   cartItem Cart_Item[]
 }
 
 model Cart_Item {
-  id           String        @id @default(auto()) @map("_id") @db.ObjectId
-  quantity     Int
-  createdAt    DateTime?
-  modifiedAt   DateTime?
-  Cart_Session Cart_Session? @relation(fields: [sessionId], references: [id])
-  sessionId    String?       @db.ObjectId
-  Product      Product?      @relation(fields: [productId], references: [id])
-  productId    String?       @db.ObjectId
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  quantity   Int
+  createdAt  DateTime?
+  modifiedAt DateTime?
+
+  art_Session Cart_Session? @relation(fields: [sessionId], references: [id])
+  sessionId   String?       @db.ObjectId
+  Product     Product?      @relation(fields: [productId], references: [id])
+  productId   String?       @db.ObjectId
 }
 
 enum OrderStatus {
