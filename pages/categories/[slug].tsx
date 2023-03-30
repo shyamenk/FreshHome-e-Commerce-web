@@ -3,11 +3,15 @@ import Image from 'next/image'
 import Link from 'next/link'
 import {prisma} from '../../lib/prisma/index'
 import {Category, Product} from 'prisma/prisma-client'
-
+import {useRouter} from 'next/router'
 type Props = {
   products: Product[] & Category
 }
 const CategoryList = (products: Props) => {
+  const router = useRouter()
+
+  const {slug} = router.query
+
   return (
     <>
       <section className="bg-primary">
@@ -19,7 +23,10 @@ const CategoryList = (products: Props) => {
             {products.products.map(item => (
               <Link
                 key={item.id}
-                href={`/categories/${item.categoryId}/${item.id}`}
+                href={{
+                  pathname: `/categories/${slug}/${item.name}`,
+                  query: {productId: item.id},
+                }}
               >
                 <div className="border-b border-blue-800 rounded">
                   <Image
@@ -58,11 +65,11 @@ const CategoryList = (products: Props) => {
 export default CategoryList
 
 export const getServerSideProps: GetServerSideProps = async context => {
-  const {params} = context
-  const id = params?.slug
+  const {query} = context
+  const {categoryId} = query
   const products = await prisma.product.findMany({
     where: {
-      categoryId: id as string,
+      categoryId: categoryId as string,
     },
     include: {
       category: true,

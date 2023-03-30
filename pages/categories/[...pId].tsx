@@ -3,6 +3,7 @@ import {GetServerSideProps} from 'next'
 import Image from 'next/image'
 import {Product} from 'prisma/prisma-client'
 import {AiFillStar} from 'react-icons/ai'
+
 type Props = {
   product: Product
 }
@@ -96,11 +97,11 @@ const ProductPage = ({product}: Props) => {
 export default ProductPage
 
 export const getServerSideProps: GetServerSideProps = async context => {
-  const {pId = []} = context.query
+  const {productId = []} = context.query
 
   const product = await prisma.product.findUnique({
     where: {
-      id: pId[1] as string,
+      id: productId as string,
     },
   })
   return {
