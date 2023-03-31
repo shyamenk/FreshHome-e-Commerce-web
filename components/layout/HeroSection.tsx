@@ -19,7 +19,7 @@ function Hero() {
             <br /> To Your <span className="text-hover">Door</span>
           </h1>
           <p className="mt-4 font-medium text-gray-700">
-            Best Groceries app ever. Pick your desired groceries from the menu
+            Best Groceries app ever . Pick your desired groceries from the menu
           </p>
           <div className="flex mt-8">
             <button className="px-6 py-2 font-semibold text-white rounded-full bg-secondary1 hover:bg-hover">
