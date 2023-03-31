@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import {Inter} from '@next/font/google'
+// import {Inter} from '@next/font/google'
 import Hero from '@/components/layout/HeroSection'
 import Feature from '@/components/layout/CategoryList'
 

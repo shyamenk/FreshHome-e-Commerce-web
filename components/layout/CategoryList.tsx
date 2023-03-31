@@ -44,8 +44,8 @@ export default function Feature() {
                     <Image
                       src={category.product[0].imageURL}
                       alt="My Image"
-                      width={1920}
-                      height={1080}
+                      width={700}
+                      height={475}
                     />
                   </div>
                   <h2 className="mb-4">{category.name}</h2>

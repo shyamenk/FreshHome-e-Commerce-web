@@ -2,6 +2,7 @@ import {Category, Product} from 'prisma/prisma-client'
 import {useRouter} from 'next/router'
 import Link from 'next/link'
 import Image from 'next/image'
+import {AiFillStar} from 'react-icons/ai'
 
 type Props = {
   products: Product[] & Category
@@ -32,8 +33,8 @@ const ProductsByCategory = ({products}: Props) => {
                     <Image
                       src={item.imageURL}
                       alt="My Image"
-                      width={1920}
-                      height={1080}
+                      width={700}
+                      height={475}
                     />
                   </div>
                   <div className="p-2 mt-2 mb-2 ">

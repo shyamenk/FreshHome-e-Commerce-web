@@ -16,8 +16,8 @@ const ProductDetailPage = ({product}: Props) => {
                 <Image
                   src={product.imageURL}
                   alt="My Image"
-                  width={1920}
-                  height={1080}
+                  width={700}
+                  height={475}
                 />
               </div>
             </div>
