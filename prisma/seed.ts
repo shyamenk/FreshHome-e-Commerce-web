@@ -3,8 +3,6 @@ import {faker} from '@faker-js/faker'
 
 const prisma = new PrismaClient()
 
-type productWithCategory = {}
-
 async function main() {
   const fakerRounds = 20
 
@@ -27,10 +25,10 @@ async function main() {
         category: {
           connectOrCreate: {
             where: {
-              name: 'Health Care ',
+              name: 'Fruits',
             },
             create: {
-              name: 'Health Care ',
+              name: 'Fruits',
             },
           },
         },

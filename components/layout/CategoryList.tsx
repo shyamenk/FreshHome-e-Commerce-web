@@ -26,12 +26,12 @@ export default function Feature() {
 
   return (
     <>
-      <section className="max-w-6xl py-6 mx-auto mt-4 bg-primary">
-        <h1 className="mb-8 text-4xl text-center text-secondary1 font-poppins">
-          Categories
+      <section className="max-w-6xl px-6 py-6 mx-auto mt-4 bg-primary">
+        <h1 className="pl-4 mb-8 text-3xl text-secondary1 font-poppins">
+          Popular Categories
         </h1>
-        <div className="container flex flex-col justify-center p-4 mx-auto border rounded-lg">
-          <div className="grid grid-cols-1 gap-4 text-xl text-center font-poppins lg:grid-cols-4 sm:grid-cols-2">
+        <div className="container flex flex-col justify-center p-4 mx-auto v ">
+          <div className="grid grid-cols-1 gap-6 text-xl text-center border-t-0 rounded-t-lg font-poppins lg:grid-cols-4 sm:grid-cols-3">
             {data?.map(category => (
               <div key={category.id}>
                 <Link
@@ -40,14 +40,15 @@ export default function Feature() {
                     query: {categoryId: category.id},
                   }}
                 >
-                  <Image
-                    className="object-cover w-full h-32 mb-3 cursor-pointer aspect-square"
-                    src={category.product[0].imageURL}
-                    alt=""
-                    width={100}
-                    height={100}
-                  />
-                  <h2>{category.name}</h2>
+                  <div className="border aspect-w-16 aspect-h-8">
+                    <Image
+                      src={category.product[0].imageURL}
+                      alt="My Image"
+                      width={1920}
+                      height={1080}
+                    />
+                  </div>
+                  <h2 className="mb-4">{category.name}</h2>
                 </Link>
               </div>
             ))}

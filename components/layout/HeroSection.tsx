@@ -4,7 +4,7 @@ import heroImage from '@/public/hero.png'
 function Hero() {
   return (
     <>
-      <div className="flex flex-col items-center gap-12 px-12 rounded-lg py-14 bg-primary md:flex-row">
+      <div className="flex flex-col items-center max-w-6xl gap-12 px-8 mx-auto py-14 bg-primary md:flex-row">
         <Image
           src={heroImage}
           className="w-full rounded-full md:w-1/3"
