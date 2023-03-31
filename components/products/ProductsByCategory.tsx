@@ -2,7 +2,6 @@ import {Category, Product} from 'prisma/prisma-client'
 import {useRouter} from 'next/router'
 import Link from 'next/link'
 import Image from 'next/image'
-import {AiFillStar} from 'react-icons/ai'
 
 type Props = {
   products: Product[] & Category

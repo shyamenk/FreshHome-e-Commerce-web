@@ -50,7 +50,7 @@ const Login: NextPage = () => {
       <div className="flex justify-center space-x-4">
         <button
           onClick={() =>
-            signIn('google', {callbackUrl: 'http://localhost:3000'})
+            signIn('google', {callbackUrl: `${process.env.local}`})
           }
           aria-label="Log in with Google"
           className="p-3 rounded-sm"
@@ -67,7 +67,7 @@ const Login: NextPage = () => {
           aria-label="Log in with Facebook"
           className="p-3 rounded-sm"
           onClick={() =>
-            signIn('facebook', {callbackUrl: 'http://localhost:3000'})
+            signIn('facebook', {callbackUrl: `${process.env.SERVER}`})
           }
         >
           <svg

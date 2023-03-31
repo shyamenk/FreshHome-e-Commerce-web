@@ -16,7 +16,7 @@ export interface CategoryWithImage {
 }
 export default function Feature() {
   const {data, error, isLoading} = useSWR<CategoryWithImage[], ErrorResponse>(
-    'http://localhost:3000/api/category',
+    `${process.env.SERVER}/api/category`,
     fetcher,
   )
 

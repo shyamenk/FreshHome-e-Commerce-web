@@ -2,10 +2,7 @@
 import {prisma} from '@/lib/prisma'
 import {GetServerSideProps} from 'next'
 import Link from 'next/link'
-// import {useSession} from 'next-auth/react'
-// import {useRouter} from 'next/router'
 import {Product} from 'prisma/prisma-client'
-import {AiFillStar} from 'react-icons/ai'
 const ProductListPage = (allProducts: Product[]) => {
   // const {status} = useSession()
   // const router = useRouter()

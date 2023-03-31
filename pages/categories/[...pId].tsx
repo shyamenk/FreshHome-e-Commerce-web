@@ -1,9 +1,7 @@
 import ProductDetailPage from '@/components/products/ProductDetailPage'
 import {prisma} from '@/lib/prisma'
 import {GetServerSideProps} from 'next'
-import Image from 'next/image'
 import {Product} from 'prisma/prisma-client'
-import {AiFillStar} from 'react-icons/ai'
 
 type Props = {
   product: Product
