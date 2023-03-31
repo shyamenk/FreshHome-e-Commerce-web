@@ -4,6 +4,8 @@ import {SessionProvider} from 'next-auth/react'
 import {ReactElement, ReactNode} from 'react'
 import {NextPage} from 'next'
 import MainLayout from '@/components/layout/MainLayout'
+import {usePageLoading} from '@/hooks/usePageLoading'
+import Spinner from '@/components/shared/Spinner'
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -14,9 +16,12 @@ type AppPropsWithLayout = AppProps & {
 }
 
 export default function App({Component, pageProps}: AppPropsWithLayout) {
+  const {isPageLoading} = usePageLoading()
   const getLayout = Component.getLayout ?? (page => page)
 
-  return (
+  return isPageLoading ? (
+    <Spinner />
+  ) : (
     <SessionProvider session={pageProps.session}>
       <MainLayout>{getLayout(<Component {...pageProps} />)}</MainLayout>
     </SessionProvider>

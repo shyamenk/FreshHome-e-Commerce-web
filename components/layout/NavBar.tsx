@@ -48,7 +48,7 @@ const NavBar: React.FC = () => {
         </Link>
       </div>
       <div className="block lg:hidden">
-        <button
+        <a
           onClick={() => setIsOpen(!isOpen)}
           className="flex items-center px-3 py-2 text-gray-800 rounded-full hover:text-slate-400"
         >
@@ -74,7 +74,7 @@ const NavBar: React.FC = () => {
               />
             )}
           </svg>
-        </button>
+        </a>
       </div>
       <AnimatePresence>
         {isOpen ? (
