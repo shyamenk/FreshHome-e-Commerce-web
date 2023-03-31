@@ -1,6 +1,4 @@
 export function DashboardStats({data}: any) {
-  console.log(data)
-
   return (
     <div className="container items-center px-4 py-8 m-auto mt-5">
       <div className="flex flex-wrap pb-3 mx-4 md:mx-24 lg:mx-0">

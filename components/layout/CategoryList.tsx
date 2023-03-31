@@ -15,14 +15,10 @@ export interface CategoryWithImage {
   product: [ProductImage]
 }
 export default function Feature() {
-  const {data, error, isLoading} = useSWR<CategoryWithImage[], ErrorResponse>(
+  const {data} = useSWR<CategoryWithImage[], ErrorResponse>(
     `${process.env.SERVER}/api/category`,
     fetcher,
   )
-
-  if (error) return <div>failed to load</div>
-
-  if (isLoading) return <Spinner />
 
   return (
     <>

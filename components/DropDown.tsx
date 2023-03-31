@@ -5,10 +5,6 @@ import React, {useState, useRef, useEffect} from 'react'
 
 type DropdownMenuProps = {}
 
-// type DropdownMenuState = {
-//   isOpen: boolean
-// }
-
 const DropdownMenu: React.FC<DropdownMenuProps> = () => {
   const {data: session} = useSession()
   const [isOpen, setIsOpen] = useState(false)

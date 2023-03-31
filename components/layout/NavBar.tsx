@@ -3,23 +3,13 @@ import {AnimatePresence, motion} from 'framer-motion'
 import Link from 'next/link'
 import DropDownMenu from '../DropDown'
 import {useSession} from 'next-auth/react'
-import Spinner from '../shared/Spinner'
 import {useRouter} from 'next/router'
 
 const NavBar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
-  const {data: session, status} = useSession()
+  const {data: session} = useSession()
 
   const router = useRouter()
-  if (status === 'loading') {
-    return <Spinner />
-  }
-
-  // TODO:
-
-  // if (status === 'unauthenticated') {
-  //   return <h1>no access</h1>
-  // }
 
   return (
     <header className="z-30 flex items-center justify-between p-4 text-gray-600 border-b shadow-sm ">
@@ -29,7 +19,7 @@ const NavBar: React.FC = () => {
           fill=""
           viewBox="0 0 24 24"
           strokeWidth="1.5"
-          stroke="orange"
+          stroke="red"
           className="w-8 h-8 "
         >
           <path
@@ -41,7 +31,7 @@ const NavBar: React.FC = () => {
         <Link href="/">
           <div className="text-3xl font-bold text-gray-800 font-poppins ">
             Fresh
-            <span className="text-xl font-bold text-hover font-poppins">
+            <span className="text-xl font-bold text-red-600 font-poppins">
               Home
             </span>
           </div>

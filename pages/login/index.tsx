@@ -49,9 +49,7 @@ const Login: NextPage = () => {
       </div>
       <div className="flex justify-center space-x-4">
         <button
-          onClick={() =>
-            signIn('google', {callbackUrl: `${process.env.local}`})
-          }
+          onClick={() => signIn('google')}
           aria-label="Log in with Google"
           className="p-3 rounded-sm"
         >

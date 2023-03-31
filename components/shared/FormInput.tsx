@@ -1,5 +1,3 @@
-import {ProductSchemaType} from 'pages/[admin]/products'
-
 interface InputProps {
   label: string
   name: string
