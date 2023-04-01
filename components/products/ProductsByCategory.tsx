@@ -7,6 +7,10 @@ type Props = {
   products: Product[] & Category
 }
 
+function truncate(str: string) {
+  return str.slice(0, 10)
+}
+
 const ProductsByCategory = ({products}: Props) => {
   const router = useRouter()
   const {slug} = router.query
@@ -27,7 +31,7 @@ const ProductsByCategory = ({products}: Props) => {
                   query: {productId: item.id},
                 }}
               >
-                <div className="border border-t-0 border-orange-100">
+                <div className="transition-all duration-300 ease-in-out border border-t-0 rounded-md bg-slate-50 hover:scale-125 ">
                   <div className="aspect-w-16 aspect-h-8">
                     <Image
                       src={item.imageURL}
@@ -40,7 +44,9 @@ const ProductsByCategory = ({products}: Props) => {
                     <span className="block text-xs font-medium tracking-widest uppercase dark:text-violet-400">
                       {item.name}
                     </span>
-                    <h2 className="tracking-wide ">{item.description}</h2>
+                    <h2 className="tracking-wide max-h-12">
+                      {truncate(item.description)}
+                    </h2>
                     <h2 className="font-semibold tracking-wide ">
                       Price &#x20B9;-{item.price}
                     </h2>

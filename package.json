@@ -7,7 +7,22 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "seed": "ts-node prismaseed.ts"
+    "seed": "ts-node prismaseed.ts",
+    "lints": "eslint .",
+    "format": "prettier --write .",
+    "lint-staged": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint-staged"
+    }
   },
   "dependencies": {
     "@hookform/resolvers": "^2.9.10",
@@ -17,7 +32,6 @@
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@types/react": "18.0.26",
     "@types/react-dom": "18.0.10",
-    "eslint": "8.30.0",
     "eslint-config-next": "13.1.0",
     "framer-motion": "^8.0.2",
     "next": "13.1.0",
@@ -36,8 +50,17 @@
     "@types/node": "^18.15.11",
     "autoprefixer": "^10.4.13",
     "dotenv": "^16.0.3",
+    "eslint": "^8.37.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "faker": "^6.6.6",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.0",
     "postcss": "^8.4.20",
+    "prettier": "^2.8.7",
     "prisma": "^4.12.0",
     "tailwindcss": "^3.2.4",
     "ts-node": "^10.9.1",

@@ -4,15 +4,26 @@ import Link from 'next/link'
 import DropDownMenu from '../DropDown'
 import {useSession} from 'next-auth/react'
 import {useRouter} from 'next/router'
+import Spinner from '../shared/Spinner'
+import {AiOutlineShoppingCart} from 'react-icons/ai'
 
 const NavBar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
-  const {data: session} = useSession()
+
+  const {data: session, status} = useSession()
 
   const router = useRouter()
 
+  if (status == 'unauthenticated') {
+    return <p>Something went Wrong</p>
+  }
+
+  if (status === 'loading') {
+    return <Spinner />
+  }
+
   return (
-    <header className="z-30 flex items-center justify-between p-4 text-gray-600 border-b shadow-sm ">
+    <nav className="z-30 flex items-center justify-between p-4 transition-colors duration-500 border-b shadow-sm ">
       <div className="flex items-center ml-12 space-x-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -78,7 +89,7 @@ const NavBar: React.FC = () => {
             transition={{duration: 1, ease: 'easeOut'}}
           >
             <div className="flex flex-col h-full p-4">
-              <div className="flex-grow ">
+              <div className="flex-shrink-0 lg:inline-block lg:mt-0">
                 <Link
                   href="/categories"
                   className="block px-4 py-2 text-black hover:rounded-lg hover:bg-gray-200 lg:inline-block lg:mt-0"
@@ -103,7 +114,10 @@ const NavBar: React.FC = () => {
                 >
                   About
                 </Link>
-                <button className="inline-flex px-4 py-2 mt-2 mr-12 text-sm text-white rounded-full 2 bg-secondary1 lg:mt-0 hover:bg-hover">
+                <button
+                  onClick={() => router.push('/login')}
+                  className="inline-flex px-4 py-2 mt-2 mr-12 text-sm text-white rounded-full 2 bg-secondary1 lg:mt-0 hover:bg-hover"
+                >
                   Login
                 </button>
               </div>
@@ -115,35 +129,41 @@ const NavBar: React.FC = () => {
               isOpen ? 'block' : 'hidden'
             }  lg:flex lg:items-center lg:justify-center w-full md:w-auto`}
           >
-            <div className="text-lg font-semibold lg:flex-grow">
+            <div className="text-lg font-semibold lg:flex-shrink">
               <Link
                 href="/categories"
-                className="block mt-4 mr-4 text-gray-800 border-hover lg:inline-block lg:mt-0 hover:text-gray-600 hover:border-b-2"
+                className="block mt-4 mr-4 text-gray-800 border-red-500 lg:inline-block lg:mt-0 hover:text-gray-600 hover:border-b-2"
               >
                 Categories
               </Link>
               <Link
                 href="/products"
-                className="block mt-4 mr-4 text-gray-800 border-hover lg:inline-block lg:mt-0 hover:text-gray-600 hover:border-b-2"
+                className="block mt-4 mr-4 text-gray-800 border-red-500 lg:inline-block lg:mt-0 hover:text-gray-600 hover:border-b-2"
               >
                 Products
               </Link>
               <Link
                 href="/contact"
-                className="block mt-4 mr-4 text-gray-800 border-hover lg:inline-block lg:mt-0 hover:text-gray-600 hover:border-b-2"
+                className="block mt-4 mr-4 text-gray-800 border-red-500 lg:inline-block lg:mt-0 hover:text-gray-600 hover:border-b-2"
               >
                 Contact
               </Link>
               <Link
                 href="/about"
-                className="block mt-4 mr-4 text-gray-800 border-hover lg:inline-block lg:mt-0 hover:text-gray-600 hover:border-b-2"
+                className="block mt-4 mr-4 text-gray-800 border-red-500 lg:inline-block lg:mt-0 hover:text-gray-600 hover:border-b-2"
               >
                 About
               </Link>
-
               {session ? (
-                <div className="inline-flex gap-2 mr-2 ">
+                <div className="inline-flex items-center gap-2 mr-2">
                   <DropDownMenu />
+
+                  <div className="relative">
+                    <AiOutlineShoppingCart className="w-8 h-8 text-gray-600 cursor-pointer" />
+                    <div className="absolute right-0 px-1 text-xs text-white bg-red-500 rounded-full -top-1">
+                      2
+                    </div>
+                  </div>
                 </div>
               ) : (
                 <button
@@ -157,7 +177,7 @@ const NavBar: React.FC = () => {
           </div>
         )}
       </AnimatePresence>
-    </header>
+    </nav>
   )
 }
 
