@@ -14,10 +14,6 @@ const NavBar: React.FC = () => {
 
   const router = useRouter();
 
-  if (status == 'unauthenticated') {
-    return <p>Something went Wrong</p>;
-  }
-
   if (status === 'loading') {
     return <Spinner />;
   }
@@ -41,7 +37,7 @@ const NavBar: React.FC = () => {
         </svg>
 
         <Link href="/">
-          <div className="text-3xl font-bold text-gray-800 font-poppins ">
+          <div className="text-3xl font-bold text-seconadary2 font-poppins ">
             Fresh
             <span className="text-xl font-bold text-red-600 font-poppins">
               Home
@@ -52,7 +48,7 @@ const NavBar: React.FC = () => {
       <div className="block lg:hidden">
         <a
           onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center px-3 py-2 text-gray-800 rounded-full hover:text-slate-400"
+          className="flex items-center px-3 py-2 rounded-full text-secondary1 hover:text-slate-400"
         >
           <svg
             className="w-6 h-6"
@@ -93,25 +89,25 @@ const NavBar: React.FC = () => {
               <div className="flex-shrink-0 lg:inline-block lg:mt-0">
                 <Link
                   href="/categories"
-                  className="block px-4 py-2 text-black hover:rounded-lg hover:bg-gray-200 lg:inline-block lg:mt-0"
+                  className="block px-4 py-2 text-secondary1 hover:rounded-lg hover:bg-gray-200 lg:inline-block lg:mt-0"
                 >
                   Categories
                 </Link>
                 <Link
                   href="/products"
-                  className="block px-4 py-2 text-black hover:rounded-lg hover:bg-gray-200 lg:inline-block lg:mt-0"
+                  className="block px-4 py-2 text-secondary1 hover:rounded-lg hover:bg-gray-200 lg:inline-block lg:mt-0"
                 >
                   Products
                 </Link>
                 <Link
                   href="/contact"
-                  className="block px-4 py-2 text-black hover:rounded-lg hover:bg-gray-200 lg:inline-block lg:mt-0"
+                  className="block px-4 py-2 text-secondary1 hover:rounded-lg hover:bg-gray-200 lg:inline-block lg:mt-0"
                 >
                   Contact
                 </Link>
                 <Link
                   href="/about"
-                  className="block px-4 py-2 text-black hover:rounded-lg hover:bg-gray-200 lg:inline-block lg:mt-0"
+                  className="block px-4 py-2 text-secondary1 hover:rounded-lg hover:bg-gray-200 lg:inline-block lg:mt-0"
                 >
                   About
                 </Link>
@@ -133,25 +129,25 @@ const NavBar: React.FC = () => {
             <div className="text-lg font-semibold lg:flex-shrink">
               <Link
                 href="/categories"
-                className="block mt-4 mr-4 text-gray-800 border-red-500 lg:inline-block lg:mt-0 hover:text-gray-600 hover:border-b-2"
+                className="block mt-4 mr-4 border-red-500 text-secondary1 lg:inline-block lg:mt-0 hover:text-gray-600 hover:border-b-2"
               >
                 Categories
               </Link>
               <Link
                 href="/products"
-                className="block mt-4 mr-4 text-gray-800 border-red-500 lg:inline-block lg:mt-0 hover:text-gray-600 hover:border-b-2"
+                className="block mt-4 mr-4 border-red-500 text-secondary1 lg:inline-block lg:mt-0 hover:text-gray-600 hover:border-b-2"
               >
                 Products
               </Link>
               <Link
                 href="/contact"
-                className="block mt-4 mr-4 text-gray-800 border-red-500 lg:inline-block lg:mt-0 hover:text-gray-600 hover:border-b-2"
+                className="block mt-4 mr-4 border-red-500 text-secondary1 lg:inline-block lg:mt-0 hover:text-gray-600 hover:border-b-2"
               >
                 Contact
               </Link>
               <Link
                 href="/about"
-                className="block mt-4 mr-4 text-gray-800 border-red-500 lg:inline-block lg:mt-0 hover:text-gray-600 hover:border-b-2"
+                className="block mt-4 mr-4 border-red-500 text-seconadary2 lg:inline-block lg:mt-0 hover:text-gray-600 hover:border-b-2"
               >
                 About
               </Link>
