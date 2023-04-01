@@ -1,5 +1,5 @@
-import AdminLayout from "@/components/layout/AdminLayout";
-import React, { ReactElement } from "react";
+import AdminLayout from '@/components/layout/AdminLayout';
+import React, { ReactElement } from 'react';
 
 const CustomerPage = () => {
   return (

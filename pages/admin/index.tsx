@@ -1,8 +1,8 @@
-import AdminLayout from "@/components/layout/AdminLayout";
-import Spinner from "@/components/shared/Spinner";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
-import { ReactElement } from "react";
+import AdminLayout from '@/components/layout/AdminLayout';
+import Spinner from '@/components/shared/Spinner';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import { ReactElement } from 'react';
 
 // type ServerSideProps = InferGetServerSidePropsType<typeof getServerSideProps>
 
@@ -10,7 +10,7 @@ const AdminDashboard = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
 
-  if (status === "loading") {
+  if (status === 'loading') {
     return <Spinner />;
   }
 
@@ -18,10 +18,10 @@ const AdminDashboard = () => {
   //   router.push('/login')
   // }
 
-  if (session?.user.role === "USER") {
-    router.push("/");
+  if (session?.user.role === 'USER') {
+    router.push('/');
   }
-  if (session?.user.role === "ADMIN") {
+  if (session?.user.role === 'ADMIN') {
     return (
       <>
         <div className="p-4 pt-8 text-4xl font-bold text-secondary1 px-auto">
