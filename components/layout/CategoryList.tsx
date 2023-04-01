@@ -1,9 +1,8 @@
-import Image from "next/image";
-import useSWR from "swr";
-import fetcher from "util/fetcher";
-import { ErrorResponse } from "types/error";
-import Link from "next/link";
-import Spinner from "../shared/Spinner";
+import Image from 'next/image';
+import useSWR from 'swr';
+import fetcher from 'util/fetcher';
+import { ErrorResponse } from 'types/error';
+import Link from 'next/link';
 
 interface ProductImage {
   imageURL: string;
@@ -33,7 +32,7 @@ export default function Feature() {
                 <Link
                   href={{
                     pathname: `/categories/${category.name}`,
-                    query: { categoryId: category.id },
+                    query: { categoryId: category.id }
                   }}
                 >
                   <div className="border aspect-w-16 aspect-h-8">

@@ -8,7 +8,8 @@
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
-    "plugin:react-hooks/recommended"
+    "plugin:react-hooks/recommended",
+    "next/core-web-vitals"
   ],
   "globals": {
     "React": "writable"
@@ -24,8 +25,8 @@
   },
   "plugins": ["@typescript-eslint", "react", "react-hooks"],
   "rules": {
-    "semi": ["error", "always"],
-    "quotes": ["error", "double"],
+    "react/no-unescaped-entities": "off",
+    "@next/next/no-page-custom-font": "off",
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": [
       "error",

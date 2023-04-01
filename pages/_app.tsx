@@ -1,13 +1,13 @@
-import "../styles/globals.css";
-import type { AppProps } from "next/app";
-import { SessionProvider } from "next-auth/react";
-import { ReactElement, ReactNode } from "react";
-import { NextPage } from "next";
-import MainLayout from "@/components/layout/MainLayout";
-import { usePageLoading } from "@/hooks/usePageLoading";
-import Spinner from "@/components/shared/Spinner";
+import '../styles/globals.css';
+import { SessionProvider } from 'next-auth/react';
+import MainLayout from '@/components/layout/MainLayout';
+import { usePageLoading } from '@/hooks/usePageLoading';
+import Spinner from '@/components/shared/Spinner';
+import { AppProps } from 'next/app';
+import { ReactElement, ReactNode } from 'react';
+import { NextPage } from 'next';
 
-export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+export type NextPageWithLayout<> = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
 

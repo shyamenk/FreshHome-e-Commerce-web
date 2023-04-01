@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "prepare": "husky install .husky",
+    "pretty":"npx pretty-quick ",
     "seed": "ts-node prismaseed.ts"
   },
 

@@ -1,7 +1,7 @@
-import { useSession } from "next-auth/react";
-import Image from "next/image";
-import Link from "next/link";
-import React from "react";
+import { useSession } from 'next-auth/react';
+import Image from 'next/image';
+import Link from 'next/link';
+import React from 'react';
 
 const SideBar = () => {
   const { data: session } = useSession();
@@ -11,7 +11,7 @@ const SideBar = () => {
       <div className="flex items-center p-2 space-x-4 ">
         {session ? (
           <Image
-            src={session?.user?.image || ""}
+            src={session?.user?.image || ''}
             alt="avatar"
             className="w-12 h-12 rounded-full"
             width={48}

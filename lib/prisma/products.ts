@@ -1,4 +1,4 @@
-import { prisma } from ".";
+import { prisma } from '.';
 
 interface IProduct {
   name: string;
@@ -13,8 +13,8 @@ export async function getProducts() {
   try {
     const products = await prisma.product.findMany({
       include: {
-        category: true,
-      },
+        category: true
+      }
     });
     return { products };
   } catch (error) {
@@ -35,10 +35,10 @@ export async function createProduct(product: IProduct) {
         category: {
           connectOrCreate: {
             where: { name: product.category },
-            create: { name: product.category },
-          },
-        },
-      },
+            create: { name: product.category }
+          }
+        }
+      }
     });
 
     return { newProduct };
@@ -50,9 +50,9 @@ export async function getProductById(id: string) {
   try {
     const products = await prisma.product.findMany({
       where: {
-        categoryId: id,
+        categoryId: id
       },
-      include: { category: true },
+      include: { category: true }
     });
     return products;
   } catch (error) {

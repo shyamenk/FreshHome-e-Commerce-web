@@ -1,9 +1,12 @@
 // import Spinner from '@/components/shared/Spinner'
-import { prisma } from "@/lib/prisma";
-import { GetServerSideProps } from "next";
-import Link from "next/link";
-import { Product } from "prisma/prisma-client";
-const ProductListPage = (allProducts: Product[]) => {
+import { prisma } from '@/lib/prisma';
+import { GetServerSideProps } from 'next';
+import { Product } from 'prisma/prisma-client';
+
+type Props = {
+  allProducts: Product[];
+};
+const ProductListPage = ({ allProducts }: Props) => {
   // const {status} = useSession()
   // const router = useRouter()
 
@@ -19,6 +22,7 @@ const ProductListPage = (allProducts: Product[]) => {
   // if (status === 'authenticated') {
   //   return <div> Service Page added</div>
   // }
+  console.log(allProducts);
 
   return (
     <>
@@ -69,14 +73,14 @@ const ProductListPage = (allProducts: Product[]) => {
 
 export default ProductListPage;
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  console.log("GetServerSide");
+export const getServerSideProps: GetServerSideProps = async () => {
+  console.log('GetServerSide');
 
   const allProducts = await prisma.product.findMany();
 
   return {
     props: {
-      allProducts: allProducts,
-    },
+      allProducts: allProducts
+    }
   };
 };

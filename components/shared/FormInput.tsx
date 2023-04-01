@@ -2,6 +2,7 @@ interface InputProps {
   label: string;
   name: string;
   type: string;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   register: Function;
   isSubmitting: boolean;
 }
@@ -11,7 +12,7 @@ const FormInput: React.FC<InputProps> = ({
   name,
   type,
   register,
-  isSubmitting,
+  isSubmitting
 }) => {
   return (
     <div>
