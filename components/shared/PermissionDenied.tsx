@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 const PermissionDenied = () => {
   return (
@@ -12,7 +12,7 @@ const PermissionDenied = () => {
         </p>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default PermissionDenied
+export default PermissionDenied;

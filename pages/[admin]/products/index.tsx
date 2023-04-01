@@ -1,9 +1,9 @@
-import React, {ReactElement} from 'react'
-import {zodResolver} from '@hookform/resolvers/zod'
-import {useForm, SubmitHandler} from 'react-hook-form'
-import AdminLayout from '@/components/layout/AdminLayout'
-import FormInput from '@/components/shared/FormInput'
-import {z} from 'zod'
+import React, { ReactElement } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, SubmitHandler } from "react-hook-form";
+import AdminLayout from "@/components/layout/AdminLayout";
+import FormInput from "@/components/shared/FormInput";
+import { z } from "zod";
 
 const ProductSchema = z.object({
   name: z.string().min(2),
@@ -13,35 +13,35 @@ const ProductSchema = z.object({
   price: z.coerce.number().min(1).nonnegative(),
   quantity: z.coerce.number().min(1).nonnegative(),
   discount: z.coerce.number().min(1).nonnegative(),
-})
+});
 
-export type ProductSchemaType = z.infer<typeof ProductSchema>
+export type ProductSchemaType = z.infer<typeof ProductSchema>;
 
 const AddProduct = () => {
   const {
     register,
     handleSubmit,
     reset,
-    formState: {errors, isSubmitting},
-  } = useForm<ProductSchemaType>({resolver: zodResolver(ProductSchema)})
+    formState: { errors, isSubmitting },
+  } = useForm<ProductSchemaType>({ resolver: zodResolver(ProductSchema) });
 
-  const onSubmit: SubmitHandler<ProductSchemaType> = async data => {
+  const onSubmit: SubmitHandler<ProductSchemaType> = async (data) => {
     try {
       const response = await fetch(`${process.env.SERVER}/api/products`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-      })
+      });
 
       if (response.status === 200) {
-        reset()
+        reset();
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   return (
     <div>
@@ -91,8 +91,8 @@ const AddProduct = () => {
                 Category
               </label>
               <select
-                {...register('category', {
-                  required: 'Email Address is required',
+                {...register("category", {
+                  required: "Email Address is required",
                 })}
                 className='className="block w-full px-3 py-2 text-sm text-gray-700 border rounded shadow appearance-none bg-gray-50 focus:outline-none focus:shadow-outline'
               >
@@ -184,14 +184,14 @@ const AddProduct = () => {
         </fieldset>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default AddProduct
+export default AddProduct;
 AddProduct.getLayout = function getLayout(page: ReactElement) {
   return (
     <AdminLayout>
       <>{page}</>
     </AdminLayout>
-  )
-}
+  );
+};

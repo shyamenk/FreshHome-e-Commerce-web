@@ -1,19 +1,19 @@
-import {Category, Product} from 'prisma/prisma-client'
-import {useRouter} from 'next/router'
-import Link from 'next/link'
-import Image from 'next/image'
+import { Category, Product } from "prisma/prisma-client";
+import { useRouter } from "next/router";
+import Link from "next/link";
+import Image from "next/image";
 
 type Props = {
-  products: Product[] & Category
-}
+  products: Product[] & Category;
+};
 
 function truncate(str: string) {
-  return str.slice(0, 10)
+  return str.slice(0, 10);
 }
 
-const ProductsByCategory = ({products}: Props) => {
-  const router = useRouter()
-  const {slug} = router.query
+const ProductsByCategory = ({ products }: Props) => {
+  const router = useRouter();
+  const { slug } = router.query;
 
   return (
     <>
@@ -23,12 +23,12 @@ const ProductsByCategory = ({products}: Props) => {
             Product By Category
           </h1>
           <div className="grid grid-cols-1 gap-10 mt-8 lg:grid-cols-4 sm:grid-cols-3">
-            {products.map(item => (
+            {products.map((item) => (
               <Link
                 key={item.id}
                 href={{
                   pathname: `/categories/${slug}/${item.name}`,
-                  query: {productId: item.id},
+                  query: { productId: item.id },
                 }}
               >
                 <div className="transition-all duration-300 ease-in-out border border-t-0 rounded-md bg-slate-50 hover:scale-125 ">
@@ -58,6 +58,6 @@ const ProductsByCategory = ({products}: Props) => {
         </div>
       </section>
     </>
-  )
-}
-export default ProductsByCategory
+  );
+};
+export default ProductsByCategory;

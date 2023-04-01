@@ -1,25 +1,25 @@
-import React, {useState} from 'react'
-import {AnimatePresence, motion} from 'framer-motion'
-import Link from 'next/link'
-import DropDownMenu from '../DropDown'
-import {useSession} from 'next-auth/react'
-import {useRouter} from 'next/router'
-import Spinner from '../shared/Spinner'
-import {AiOutlineShoppingCart} from 'react-icons/ai'
+import React, { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import Link from "next/link";
+import DropDownMenu from "../DropDown";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import Spinner from "../shared/Spinner";
+import { AiOutlineShoppingCart } from "react-icons/ai";
 
 const NavBar: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
-  const {data: session, status} = useSession()
+  const { data: session, status } = useSession();
 
-  const router = useRouter()
+  const router = useRouter();
 
-  if (status == 'unauthenticated') {
-    return <p>Something went Wrong</p>
+  if (status == "unauthenticated") {
+    return <p>Something went Wrong</p>;
   }
 
-  if (status === 'loading') {
-    return <Spinner />
+  if (status === "loading") {
+    return <Spinner />;
   }
 
   return (
@@ -81,12 +81,12 @@ const NavBar: React.FC = () => {
         {isOpen ? (
           <motion.div
             className="fixed inset-0 z-10 bg-white border-r"
-            style={{height: '100vh', width: '200px', top: '74px'}}
-            initial={{opacity: 0, x: -100}}
-            whileInView={{opacity: 1, x: 0}}
-            exit={{opacity: 1, x: 0}}
-            viewport={{once: true}}
-            transition={{duration: 1, ease: 'easeOut'}}
+            style={{ height: "100vh", width: "200px", top: "74px" }}
+            initial={{ opacity: 0, x: -100 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, ease: "easeOut" }}
           >
             <div className="flex flex-col h-full p-4">
               <div className="flex-shrink-0 lg:inline-block lg:mt-0">
@@ -115,7 +115,7 @@ const NavBar: React.FC = () => {
                   About
                 </Link>
                 <button
-                  onClick={() => router.push('/login')}
+                  onClick={() => router.push("/login")}
                   className="inline-flex px-4 py-2 mt-2 mr-12 text-sm text-white rounded-full 2 bg-secondary1 lg:mt-0 hover:bg-hover"
                 >
                   Login
@@ -126,7 +126,7 @@ const NavBar: React.FC = () => {
         ) : (
           <div
             className={`${
-              isOpen ? 'block' : 'hidden'
+              isOpen ? "block" : "hidden"
             }  lg:flex lg:items-center lg:justify-center w-full md:w-auto`}
           >
             <div className="text-lg font-semibold lg:flex-shrink">
@@ -167,7 +167,7 @@ const NavBar: React.FC = () => {
                 </div>
               ) : (
                 <button
-                  onClick={() => router.push('/login')}
+                  onClick={() => router.push("/login")}
                   className="inline-flex px-8 py-2 mt-4 mr-12 text-sm text-white rounded-full bg-secondary1 lg:mt-0 hover:bg-hover"
                 >
                   LogIn
@@ -178,7 +178,7 @@ const NavBar: React.FC = () => {
         )}
       </AnimatePresence>
     </nav>
-  )
-}
+  );
+};
 
-export default NavBar
+export default NavBar;

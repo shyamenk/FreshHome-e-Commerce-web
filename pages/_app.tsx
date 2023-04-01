@@ -1,23 +1,23 @@
-import '../styles/globals.css'
-import type {AppProps} from 'next/app'
-import {SessionProvider} from 'next-auth/react'
-import {ReactElement, ReactNode} from 'react'
-import {NextPage} from 'next'
-import MainLayout from '@/components/layout/MainLayout'
-import {usePageLoading} from '@/hooks/usePageLoading'
-import Spinner from '@/components/shared/Spinner'
+import "../styles/globals.css";
+import type { AppProps } from "next/app";
+import { SessionProvider } from "next-auth/react";
+import { ReactElement, ReactNode } from "react";
+import { NextPage } from "next";
+import MainLayout from "@/components/layout/MainLayout";
+import { usePageLoading } from "@/hooks/usePageLoading";
+import Spinner from "@/components/shared/Spinner";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
-  getLayout?: (page: ReactElement) => ReactNode
-}
+  getLayout?: (page: ReactElement) => ReactNode;
+};
 
 type AppPropsWithLayout = AppProps & {
-  Component: NextPageWithLayout
-}
+  Component: NextPageWithLayout;
+};
 
-export default function App({Component, pageProps}: AppPropsWithLayout) {
-  const {isPageLoading} = usePageLoading()
-  const getLayout = Component.getLayout ?? (page => page)
+export default function App({ Component, pageProps }: AppPropsWithLayout) {
+  const { isPageLoading } = usePageLoading();
+  const getLayout = Component.getLayout ?? ((page) => page);
 
   return isPageLoading ? (
     <Spinner />
@@ -25,5 +25,5 @@ export default function App({Component, pageProps}: AppPropsWithLayout) {
     <SessionProvider session={pageProps.session}>
       <MainLayout>{getLayout(<Component {...pageProps} />)}</MainLayout>
     </SessionProvider>
-  )
+  );
 }

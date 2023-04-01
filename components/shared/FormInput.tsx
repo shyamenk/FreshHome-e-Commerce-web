@@ -1,9 +1,9 @@
 interface InputProps {
-  label: string
-  name: string
-  type: string
-  register: Function
-  isSubmitting: boolean
+  label: string;
+  name: string;
+  type: string;
+  register: Function;
+  isSubmitting: boolean;
 }
 
 const FormInput: React.FC<InputProps> = ({
@@ -29,7 +29,7 @@ const FormInput: React.FC<InputProps> = ({
         className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline disabled:bg-gray-100 disabled:text-gray-300 disabled:cursor-not-allowed "
       />
     </div>
-  )
-}
+  );
+};
 
-export default FormInput
+export default FormInput;

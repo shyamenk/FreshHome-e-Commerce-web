@@ -6,13 +6,13 @@ const nextConfig = {
   },
   images: {
     domains: [
-      'lh3.googleusercontent.com',
-      'loremflickr.com',
-      'images.unsplash.com',
-      'source.unsplash.com',
-      'platform-lookaside.fbsbx.com',
+      "lh3.googleusercontent.com",
+      "loremflickr.com",
+      "images.unsplash.com",
+      "source.unsplash.com",
+      "platform-lookaside.fbsbx.com",
     ],
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

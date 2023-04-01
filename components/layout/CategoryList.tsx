@@ -1,24 +1,24 @@
-import Image from 'next/image'
-import useSWR from 'swr'
-import fetcher from 'util/fetcher'
-import {ErrorResponse} from 'types/error'
-import Link from 'next/link'
-import Spinner from '../shared/Spinner'
+import Image from "next/image";
+import useSWR from "swr";
+import fetcher from "util/fetcher";
+import { ErrorResponse } from "types/error";
+import Link from "next/link";
+import Spinner from "../shared/Spinner";
 
 interface ProductImage {
-  imageURL: string
+  imageURL: string;
 }
 
 export interface CategoryWithImage {
-  id: number
-  name: string
-  product: [ProductImage]
+  id: number;
+  name: string;
+  product: [ProductImage];
 }
 export default function Feature() {
-  const {data} = useSWR<CategoryWithImage[], ErrorResponse>(
+  const { data } = useSWR<CategoryWithImage[], ErrorResponse>(
     `${process.env.SERVER}/api/category`,
-    fetcher,
-  )
+    fetcher
+  );
 
   return (
     <>
@@ -28,12 +28,12 @@ export default function Feature() {
         </h1>
         <div className="container flex flex-col justify-center p-4 mx-auto v ">
           <div className="grid grid-cols-1 gap-6 text-xl text-center border-t-0 rounded-t-lg font-poppins lg:grid-cols-4 sm:grid-cols-3">
-            {data?.map(category => (
+            {data?.map((category) => (
               <div key={category.id}>
                 <Link
                   href={{
                     pathname: `/categories/${category.name}`,
-                    query: {categoryId: category.id},
+                    query: { categoryId: category.id },
                   }}
                 >
                   <div className="border aspect-w-16 aspect-h-8">
@@ -52,5 +52,5 @@ export default function Feature() {
         </div>
       </section>
     </>
-  )
+  );
 }

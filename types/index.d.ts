@@ -1,42 +1,42 @@
-export type LogLevel = 'info' | 'query' | 'warn' | 'error'
+export type LogLevel = "info" | "query" | "warn" | "error";
 export type LogDefinition = {
-  level: LogLevel
-  emit: 'stdout' | 'event'
-}
+  level: LogLevel;
+  emit: "stdout" | "event";
+};
 
 //Note that for MongoDB, the params and duration fields will be undefined.
 
 export type QueryEvent = {
-  timestamp: Date
-  query: string // Query sent to the database
-  params: string // Query parameters
-  duration: number // Time elapsed (in milliseconds) between client issuing query and database responding - not only time taken to run query
-  target: string
-}
+  timestamp: Date;
+  query: string; // Query sent to the database
+  params: string; // Query parameters
+  duration: number; // Time elapsed (in milliseconds) between client issuing query and database responding - not only time taken to run query
+  target: string;
+};
 
 export type LogEvent = {
-  timestamp: Date
-  message: string
-  target: string
-}
-export type ErrorFormat = 'pretty' | 'colorless' | 'minimal'
+  timestamp: Date;
+  message: string;
+  target: string;
+};
+export type ErrorFormat = "pretty" | "colorless" | "minimal";
 
 export type ProductFindUniqueArgs = {
-  where: ProductWhereUniqueInput
-  select?: ProductSelect | null
-  include?: ProductInclude | null
-}
+  where: ProductWhereUniqueInput;
+  select?: ProductSelect | null;
+  include?: ProductInclude | null;
+};
 
 export type UserFindFirstArgs = {
-  select?: XOR<UserSelect, null>
-  include?: XOR<UserInclude, null>
-  where?: UserWhereInput
-  orderBy?: XOR<Enumerable<UserOrderByInput>, UserOrderByInput>
-  cursor?: UserWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Enumerable<UserDistinctFieldEnum>
-}
+  select?: XOR<UserSelect, null>;
+  include?: XOR<UserInclude, null>;
+  where?: UserWhereInput;
+  orderBy?: XOR<Enumerable<UserOrderByInput>, UserOrderByInput>;
+  cursor?: UserWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  distinct?: Enumerable<UserDistinctFieldEnum>;
+};
 
 /* 
 import { PrismaClient } from '@prisma/client'

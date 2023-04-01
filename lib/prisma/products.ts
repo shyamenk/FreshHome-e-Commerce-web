@@ -1,13 +1,13 @@
-import {prisma} from '.'
+import { prisma } from ".";
 
 interface IProduct {
-  name: string
-  description: string
-  price: number
-  quantity: number
-  imageURL: string
-  discount: number
-  category: string
+  name: string;
+  description: string;
+  price: number;
+  quantity: number;
+  imageURL: string;
+  discount: number;
+  category: string;
 }
 export async function getProducts() {
   try {
@@ -15,10 +15,10 @@ export async function getProducts() {
       include: {
         category: true,
       },
-    })
-    return {products}
+    });
+    return { products };
   } catch (error) {
-    return {error}
+    return { error };
   }
 }
 
@@ -34,16 +34,16 @@ export async function createProduct(product: IProduct) {
         discount: product.discount,
         category: {
           connectOrCreate: {
-            where: {name: product.category},
-            create: {name: product.category},
+            where: { name: product.category },
+            create: { name: product.category },
           },
         },
       },
-    })
+    });
 
-    return {newProduct}
+    return { newProduct };
   } catch (error) {
-    return {error}
+    return { error };
   }
 }
 export async function getProductById(id: string) {
@@ -52,10 +52,10 @@ export async function getProductById(id: string) {
       where: {
         categoryId: id,
       },
-      include: {category: true},
-    })
-    return products
+      include: { category: true },
+    });
+    return products;
   } catch (error) {
-    return {error}
+    return { error };
   }
 }

@@ -1,16 +1,16 @@
-import * as React from 'react'
-import {motion, AnimatePresence} from 'framer-motion'
+import * as React from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Modal: React.FunctionComponent = () => {
-  const [isOpen, setIsOpen] = React.useState<boolean>(false)
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
   const openModal = () => {
-    setIsOpen(true)
-  }
+    setIsOpen(true);
+  };
 
   const closeModal = () => {
-    setIsOpen(false)
-  }
+    setIsOpen(false);
+  };
 
   return (
     <div>
@@ -23,9 +23,9 @@ const Modal: React.FunctionComponent = () => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{y: '-100%'}}
-            animate={{y: 0}}
-            exit={{y: '-100%'}}
+            initial={{ y: "-100%" }}
+            animate={{ y: 0 }}
+            exit={{ y: "-100%" }}
             className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-gray-500 bg-opacity-75"
           >
             <div className="max-w-xl p-8 bg-white rounded-lg">
@@ -83,7 +83,7 @@ const Modal: React.FunctionComponent = () => {
         )}
       </AnimatePresence>
     </div>
-  )
-}
+  );
+};
 
-export default Modal
+export default Modal;

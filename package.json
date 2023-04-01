@@ -12,16 +12,11 @@
     "lint-staged": "lint-staged"
   },
   "lint-staged": {
-    "*.tsx,ts,js,jsx": [
+    "*.tsx": [
       "eslint --fix",
       "prettier --write",
       "git add"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint-staged"
-    }
   },
   "dependencies": {
     "@hookform/resolvers": "^2.9.10",

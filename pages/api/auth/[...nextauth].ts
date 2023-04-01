@@ -1,8 +1,8 @@
-import NextAuth from 'next-auth'
-import {prisma} from '@/lib/prisma'
-import {PrismaAdapter} from '@next-auth/prisma-adapter'
-import GoogleProvider from 'next-auth/providers/google'
-import FacebookProvider from 'next-auth/providers/facebook'
+import NextAuth from "next-auth";
+import { prisma } from "@/lib/prisma";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import GoogleProvider from "next-auth/providers/google";
+import FacebookProvider from "next-auth/providers/facebook";
 
 export default NextAuth({
   adapter: PrismaAdapter(prisma),
@@ -18,7 +18,7 @@ export default NextAuth({
   ],
 
   pages: {
-    signIn: '/login', // Displays signin buttons
+    signIn: "/login", // Displays signin buttons
     // signOut: '/auth/signout', // Displays form with sign out button
     // error: '/auth/error', // Error code passed in query string as ?error=
     // verifyRequest: '/auth/verify-request', // Used for check email page
@@ -30,13 +30,13 @@ export default NextAuth({
     //   return true
     // },
     // async redirect({ url, baseUrl }) { return baseUrl },
-    async session({session, user}) {
+    async session({ session, user }) {
       if (session) {
-        session.user.id = user.id
-        session.user.role = user.role
+        session.user.id = user.id;
+        session.user.role = user.role;
       }
-      return session
+      return session;
       // async jwt({ token, user, account, profile, isNewUser }) { return token }
     },
   },
-})
+});

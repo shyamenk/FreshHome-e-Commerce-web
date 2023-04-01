@@ -1,6 +1,6 @@
-import {NextPage} from 'next'
-import {signIn} from 'next-auth/react'
-import {redirect} from 'next/dist/server/api-utils'
+import { NextPage } from "next";
+import { signIn } from "next-auth/react";
+import { redirect } from "next/dist/server/api-utils";
 const Login: NextPage = () => {
   return (
     <div className="w-full max-w-md p-8 mx-auto mt-10 space-y-3 border rounded-xl ">
@@ -51,7 +51,7 @@ const Login: NextPage = () => {
       <div className="flex justify-center space-x-4">
         <button
           onClick={() =>
-            signIn('google', {callbackUrl: `${process.env.SERVER}`})
+            signIn("google", { callbackUrl: `${process.env.SERVER}` })
           }
           aria-label="Log in with Google"
           className="p-3 rounded-sm"
@@ -68,7 +68,7 @@ const Login: NextPage = () => {
           aria-label="Log in with Facebook"
           className="p-3 rounded-sm"
           onClick={() =>
-            signIn('facebook', {callbackUrl: `${process.env.SERVER}`})
+            signIn("facebook", { callbackUrl: `${process.env.SERVER}` })
           }
         >
           <svg
@@ -96,7 +96,7 @@ const Login: NextPage = () => {
         </a>
       </p>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

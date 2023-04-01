@@ -1,11 +1,11 @@
-import Image from 'next/image'
-import {Product} from 'prisma/prisma-client'
-import {AiFillStar} from 'react-icons/ai'
+import Image from "next/image";
+import { Product } from "prisma/prisma-client";
+import { AiFillStar } from "react-icons/ai";
 type Props = {
-  product: Product
-}
+  product: Product;
+};
 
-const ProductDetailPage = ({product}: Props) => {
+const ProductDetailPage = ({ product }: Props) => {
   return (
     <div>
       <div className="min-h-screen mt-6 bg-primary">
@@ -69,7 +69,7 @@ const ProductDetailPage = ({product}: Props) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProductDetailPage
+export default ProductDetailPage;

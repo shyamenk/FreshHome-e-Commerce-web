@@ -1,17 +1,17 @@
-import {PrismaClient} from '@prisma/client'
-import {faker} from '@faker-js/faker'
+import { PrismaClient } from "@prisma/client";
+import { faker } from "@faker-js/faker";
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 async function main() {
-  const fakerRounds = 20
+  const fakerRounds = 20;
 
   // await prisma.category.deleteMany()
   // console.log('Deleted records in category table')
 
   // await prisma.product.deleteMany()
   // console.log('Deleted records in product table')
-  console.log('Databse Seeding...')
+  console.log("Databse Seeding...");
   /// --------- Products ---------------
   for (let i = 0; i < fakerRounds; i++) {
     const res = await prisma.product.create({
@@ -25,20 +25,20 @@ async function main() {
         category: {
           connectOrCreate: {
             where: {
-              name: 'Fruits',
+              name: "Fruits",
             },
             create: {
-              name: 'Fruits',
+              name: "Fruits",
             },
           },
         },
       },
-    })
+    });
   }
 }
 
 main()
-  .catch(e => console.error(e))
+  .catch((e) => console.error(e))
   .finally(async () => {
-    await prisma.$disconnect()
-  })
+    await prisma.$disconnect();
+  });

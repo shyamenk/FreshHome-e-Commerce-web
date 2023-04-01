@@ -1,27 +1,27 @@
-import AdminLayout from '@/components/layout/AdminLayout'
-import Spinner from '@/components/shared/Spinner'
-import {useSession} from 'next-auth/react'
-import {useRouter} from 'next/router'
-import {ReactElement} from 'react'
+import AdminLayout from "@/components/layout/AdminLayout";
+import Spinner from "@/components/shared/Spinner";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import { ReactElement } from "react";
 
 // type ServerSideProps = InferGetServerSidePropsType<typeof getServerSideProps>
 
 const AdminDashboard = () => {
-  const {data: session, status} = useSession()
-  const router = useRouter()
+  const { data: session, status } = useSession();
+  const router = useRouter();
 
-  if (status === 'loading') {
-    return <Spinner />
+  if (status === "loading") {
+    return <Spinner />;
   }
 
   // if (status === 'unauthenticated') {
   //   router.push('/login')
   // }
 
-  if (session?.user.role === 'USER') {
-    router.push('/')
+  if (session?.user.role === "USER") {
+    router.push("/");
   }
-  if (session?.user.role === 'ADMIN') {
+  if (session?.user.role === "ADMIN") {
     return (
       <>
         <div className="p-4 pt-8 text-4xl font-bold text-secondary1 px-auto">
@@ -150,9 +150,9 @@ const AdminDashboard = () => {
           </div>
         </div>
       </>
-    )
+    );
   }
-}
+};
 
 // export const getServerSideProps = async () => {
 //   const product = await prisma.product.findMany({
@@ -169,7 +169,7 @@ AdminDashboard.getLayout = function getLayout(page: ReactElement) {
     <AdminLayout>
       <>{page}</>
     </AdminLayout>
-  )
-}
+  );
+};
 
-export default AdminDashboard
+export default AdminDashboard;

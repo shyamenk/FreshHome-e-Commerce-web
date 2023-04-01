@@ -1,4 +1,4 @@
-import {prisma} from '.'
+import { prisma } from ".";
 
 export async function getCategory() {
   try {
@@ -13,11 +13,11 @@ export async function getCategory() {
           take: 1,
         },
       },
-      distinct: ['name'],
-    })
+      distinct: ["name"],
+    });
 
-    return {categories}
+    return { categories };
   } catch (error) {
-    return {error}
+    return { error };
   }
 }

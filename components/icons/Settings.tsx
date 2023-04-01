@@ -21,7 +21,7 @@ const Settings = () => {
         />
       </svg>
     </div>
-  )
-}
+  );
+};
 
-export default Settings
+export default Settings;

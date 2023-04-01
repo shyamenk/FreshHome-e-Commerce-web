@@ -1,5 +1,5 @@
-import Image from 'next/image'
-import heroImage from '@/public/hero.png'
+import Image from "next/image";
+import heroImage from "@/public/hero.png";
 
 function Hero() {
   return (
@@ -32,7 +32,7 @@ function Hero() {
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default Hero
+export default Hero;
