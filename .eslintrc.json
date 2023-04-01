@@ -19,7 +19,9 @@
     "import/named": "error",
     "import/default": "error",
     "import/namespace": "error",
-    "singleQuote": true,
-    "parser": "flow"
+    "trailingComma": "error",
+    "tabWidth": "warn",
+    "semi": "off",
+    "singleQuote": true
   }
 }
