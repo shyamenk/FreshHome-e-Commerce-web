@@ -1,4 +1,4 @@
-import {useReducer} from 'react'
+import {useReducer, useEffect} from 'react'
 
 type CartState = {
   items: {id: number; name: string; price: number}[]

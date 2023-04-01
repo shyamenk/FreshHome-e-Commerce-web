@@ -6,6 +6,7 @@
     "plugin:import/warnings",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
+    "plugin:prettier/recommended",
     "prettier"
   ],
   "plugins": [
@@ -17,6 +18,8 @@
     "import/no-unresolved": "error",
     "import/named": "error",
     "import/default": "error",
-    "import/namespace": "error"
+    "import/namespace": "error",
+    "singleQuote": true,
+    "parser": "flow"
   }
 }
