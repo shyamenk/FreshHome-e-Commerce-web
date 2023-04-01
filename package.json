@@ -6,9 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
     "seed": "ts-node prismaseed.ts",
-    "lints": "eslint .",
+    "lint": "eslint .",
     "format": "prettier --write .",
     "lint-staged": "lint-staged"
   },
