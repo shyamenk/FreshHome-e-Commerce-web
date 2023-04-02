@@ -32,12 +32,12 @@ const ProductsByCategory = ({ products }: Props) => {
                 }}
               >
                 <div className="transition-all duration-300 ease-in-out border-2 border-t-0 rounded-md bg-slate-50 hover:scale-125 ">
-                  <div className=" aspect-w-16 aspect-h-10">
+                  <div className="">
                     <Image
                       src={item.imageURL}
                       alt="My Image"
-                      width={700}
-                      height={475}
+                      width={278}
+                      height={356}
                     />
                   </div>
                   <div className="p-2 mt-2 mb-2 text-center ">

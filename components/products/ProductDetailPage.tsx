@@ -1,6 +1,6 @@
-import Image from "next/image";
-import { Product } from "prisma/prisma-client";
-import { AiFillStar } from "react-icons/ai";
+import Image from 'next/image';
+import { Product } from 'prisma/prisma-client';
+import { AiFillStar } from 'react-icons/ai';
 type Props = {
   product: Product;
 };
@@ -16,8 +16,8 @@ const ProductDetailPage = ({ product }: Props) => {
                 <Image
                   src={product.imageURL}
                   alt="My Image"
-                  width={700}
-                  height={475}
+                  width={278}
+                  height={356}
                   priority
                 />
               </div>
