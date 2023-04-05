@@ -4,6 +4,8 @@ import Image from 'next/image';
 import { Product } from 'prisma/prisma-client';
 import { AiFillStar } from 'react-icons/ai';
 import Spinner from '../shared/Spinner';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
 type Props = {
   product: Product;
@@ -11,14 +13,19 @@ type Props = {
 
 const ProductDetailPage = ({ product }: Props) => {
   const { dispatch } = useCart();
-
+  const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
   const addItem = (item: CartItem) => {
     dispatch({ type: 'ADD_ITEM', payload: item });
   };
 
-  setTimeout(function () {
+  useEffect(() => {
+    router.isReady && setIsLoading(false);
+  }, []);
+
+  if (isLoading) {
     return <Spinner />;
-  }, 2000);
+  }
 
   return (
     <div>

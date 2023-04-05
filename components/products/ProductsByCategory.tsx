@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
 import Spinner from '../shared/Spinner';
-
+import { useEffect, useState } from 'react';
 type Props = {
   products: Product[] & Category;
 };
@@ -13,12 +13,17 @@ function truncate(str: string) {
 }
 
 const ProductsByCategory = ({ products }: Props) => {
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
   const { slug } = router.query;
 
-  setTimeout(function () {
+  useEffect(() => {
+    router.isReady && setIsLoading(false);
+  }, []);
+
+  if (isLoading) {
     return <Spinner />;
-  }, 2000);
+  }
   return (
     <>
       <section className="bg-primary">
