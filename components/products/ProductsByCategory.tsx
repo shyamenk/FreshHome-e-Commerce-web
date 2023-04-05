@@ -19,7 +19,7 @@ const ProductsByCategory = ({ products }: Props) => {
 
   useEffect(() => {
     router.isReady && setIsLoading(false);
-  }, []);
+  }, [router.isReady]);
 
   if (isLoading) {
     return <Spinner />;

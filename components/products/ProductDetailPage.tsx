@@ -21,7 +21,7 @@ const ProductDetailPage = ({ product }: Props) => {
 
   useEffect(() => {
     router.isReady && setIsLoading(false);
-  }, []);
+  }, [router.isReady]);
 
   if (isLoading) {
     return <Spinner />;
