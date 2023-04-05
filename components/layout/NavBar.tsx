@@ -5,7 +5,7 @@ import DropDownMenu from '../DropDown';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import Spinner from '../shared/Spinner';
-import { AiOutlineShoppingCart } from 'react-icons/ai';
+import CartDropdownMenu from '../CartDropDownMenu';
 
 const NavBar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -154,13 +154,7 @@ const NavBar: React.FC = () => {
               {session ? (
                 <div className="inline-flex items-center gap-2 mr-2">
                   <DropDownMenu />
-
-                  <div className="relative">
-                    <AiOutlineShoppingCart className="w-8 h-8 text-gray-600 cursor-pointer" />
-                    <div className="absolute right-0 px-1 text-xs text-white bg-red-500 rounded-full -top-1">
-                      2
-                    </div>
-                  </div>
+                  <CartDropdownMenu />
                 </div>
               ) : (
                 <button

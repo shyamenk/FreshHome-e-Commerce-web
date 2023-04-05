@@ -1,11 +1,24 @@
+import { useCart } from '@/context/cartContext';
+import { CartItem } from '@/hooks/cartReducer';
 import Image from 'next/image';
 import { Product } from 'prisma/prisma-client';
 import { AiFillStar } from 'react-icons/ai';
+
 type Props = {
   product: Product;
 };
 
 const ProductDetailPage = ({ product }: Props) => {
+  const { dispatch } = useCart();
+
+  const addItem = (item: CartItem) => {
+    dispatch({ type: 'ADD_ITEM', payload: item });
+  };
+
+  // Remove an item from the cart
+  // const removeItem = (id: number) => {
+  //   dispatch({ type: 'REMOVE_ITEM', payload: { id } });
+  // };
   return (
     <div>
       <div className="min-h-screen mt-6 bg-primary">
@@ -60,7 +73,19 @@ const ProductDetailPage = ({ product }: Props) => {
                 />
               </div>
               <div className="mt-4">
-                <button className="px-4 py-2 text-white bg-red-500 rounded-md hover:bg-red-600">
+                <button
+                  onClick={() =>
+                    addItem({
+                      id: product.id,
+                      name: product.name,
+                      quantity: product.quantity,
+                      price: product.price,
+                      image: product.imageURL,
+                      description: product.description
+                    })
+                  }
+                  className="px-4 py-2 text-white bg-red-500 rounded-md hover:bg-red-600"
+                >
                   Add to cart
                 </button>
               </div>

@@ -49,11 +49,6 @@ model User {
   cartSession   Cart_Session[]
 }
 
-enum Role {
-  USER
-  ADMIN
-}
-
 model VerificationToken {
   id         String   @id @default(auto()) @map("_id") @db.ObjectId
   identifier String
@@ -61,6 +56,11 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+enum Role {
+  USER
+  ADMIN
 }
 
 model UserAddress {
@@ -74,16 +74,6 @@ model UserAddress {
   telephone    Int?
   mobile       Int
   user         User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-model UserPayment {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  userId    String    @db.ObjectId
-  type      String
-  provider  String
-  accountNo Int
-  expiry    DateTime?
-  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Product {
@@ -106,6 +96,25 @@ model Category {
   product Product[]
 }
 
+model Cart_Session {
+  id       String      @id @default(auto()) @map("_id") @db.ObjectId
+  total    Int
+  user     User?       @relation(fields: [userId], references: [id])
+  userId   String?     @db.ObjectId
+  cartItem Cart_Item[]
+}
+
+model Cart_Item {
+  id           String        @id @default(auto()) @map("_id") @db.ObjectId
+  quantity     Int
+  createdAt    DateTime?
+  modifiedAt   DateTime?
+  cart_Session Cart_Session? @relation(fields: [sessionId], references: [id])
+  sessionId    String?       @db.ObjectId
+  Product      Product?      @relation(fields: [productId], references: [id])
+  productId    String?       @db.ObjectId
+}
+
 model Order {
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
   total      Int
@@ -124,9 +133,8 @@ model OrderItems {
   quantity   Int
   createdAt  DateTime?
   modifiedAt DateTime?
-
-  order   Order?  @relation(fields: [orderId], references: [id])
-  orderId String? @db.ObjectId
+  order      Order?    @relation(fields: [orderId], references: [id])
+  orderId    String?   @db.ObjectId
 
   product   Product? @relation(fields: [productId], references: [id])
   productId String?  @db.ObjectId
@@ -139,33 +147,18 @@ model Payment {
   status     OrderStatus
   createdAt  DateTime?
   modifiedAt DateTime?
-
-  order   Order?  @relation(fields: [orderId], references: [id])
-  orderId String? @db.ObjectId
+  order      Order?      @relation(fields: [orderId], references: [id])
+  orderId    String?     @db.ObjectId
 }
 
-model Cart_Session {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  total      Int
-  createdAt  DateTime?
-  modifiedAt DateTime?
-
-  user   User?   @relation(fields: [userId], references: [id])
-  userId String? @db.ObjectId
-
-  cartItem Cart_Item[]
-}
-
-model Cart_Item {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  quantity   Int
-  createdAt  DateTime?
-  modifiedAt DateTime?
-
-  art_Session Cart_Session? @relation(fields: [sessionId], references: [id])
-  sessionId   String?       @db.ObjectId
-  Product     Product?      @relation(fields: [productId], references: [id])
-  productId   String?       @db.ObjectId
+model UserPayment {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String    @db.ObjectId
+  type      String
+  provider  String
+  accountNo Int
+  expiry    DateTime?
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 enum OrderStatus {

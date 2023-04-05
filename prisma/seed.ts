@@ -25,7 +25,7 @@ async function main() {
         description: faker.commerce.productName(),
         price: faker.datatype.number(100),
         quantity: faker.datatype.number(100),
-        imageURL: faker.image.food(640, 480, true),
+        imageURL: faker.image.image(640, 480, true),
         discount: faker.datatype.number(100),
         category: {
           connectOrCreate: {
