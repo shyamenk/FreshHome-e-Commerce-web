@@ -2,6 +2,7 @@ import { Category, Product } from 'prisma/prisma-client';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
+import Spinner from '../shared/Spinner';
 
 type Props = {
   products: Product[] & Category;
@@ -15,6 +16,9 @@ const ProductsByCategory = ({ products }: Props) => {
   const router = useRouter();
   const { slug } = router.query;
 
+  setTimeout(function () {
+    return <Spinner />;
+  }, 2000);
   return (
     <>
       <section className="bg-primary">

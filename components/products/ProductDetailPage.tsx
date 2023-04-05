@@ -3,6 +3,7 @@ import { CartItem } from '@/hooks/cartReducer';
 import Image from 'next/image';
 import { Product } from 'prisma/prisma-client';
 import { AiFillStar } from 'react-icons/ai';
+import Spinner from '../shared/Spinner';
 
 type Props = {
   product: Product;
@@ -15,10 +16,10 @@ const ProductDetailPage = ({ product }: Props) => {
     dispatch({ type: 'ADD_ITEM', payload: item });
   };
 
-  // Remove an item from the cart
-  // const removeItem = (id: number) => {
-  //   dispatch({ type: 'REMOVE_ITEM', payload: { id } });
-  // };
+  setTimeout(function () {
+    return <Spinner />;
+  }, 2000);
+
   return (
     <div>
       <div className="min-h-screen mt-6 bg-primary">
