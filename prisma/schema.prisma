@@ -100,15 +100,13 @@ model Cart_Session {
   id       String      @id @default(auto()) @map("_id") @db.ObjectId
   total    Int
   user     User?       @relation(fields: [userId], references: [id])
-  userId   String?     @db.ObjectId
+  userId   String      @unique @db.ObjectId
   cartItem Cart_Item[]
 }
 
 model Cart_Item {
   id           String        @id @default(auto()) @map("_id") @db.ObjectId
   quantity     Int
-  createdAt    DateTime?
-  modifiedAt   DateTime?
   cart_Session Cart_Session? @relation(fields: [sessionId], references: [id])
   sessionId    String?       @db.ObjectId
   Product      Product?      @relation(fields: [productId], references: [id])
@@ -116,39 +114,30 @@ model Cart_Item {
 }
 
 model Order {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  id         String       @id @default(auto()) @map("_id") @db.ObjectId
   total      Int
-  createdAt  DateTime?
-  modifiedAt DateTime?
-
-  user   User?   @relation(fields: [userId], references: [id])
-  userId String? @db.ObjectId
-
+  user       User?        @relation(fields: [userId], references: [id])
+  userId     String?      @db.ObjectId
   orderItems OrderItems[]
   payment    Payment[]
 }
 
 model OrderItems {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  quantity   Int
-  createdAt  DateTime?
-  modifiedAt DateTime?
-  order      Order?    @relation(fields: [orderId], references: [id])
-  orderId    String?   @db.ObjectId
-
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  quantity  Int
+  order     Order?   @relation(fields: [orderId], references: [id])
+  orderId   String?  @db.ObjectId
   product   Product? @relation(fields: [productId], references: [id])
   productId String?  @db.ObjectId
 }
 
 model Payment {
-  id         String      @id @default(auto()) @map("_id") @db.ObjectId
-  amount     Int
-  provider   String
-  status     OrderStatus
-  createdAt  DateTime?
-  modifiedAt DateTime?
-  order      Order?      @relation(fields: [orderId], references: [id])
-  orderId    String?     @db.ObjectId
+  id       String      @id @default(auto()) @map("_id") @db.ObjectId
+  amount   Int
+  provider String
+  status   OrderStatus
+  order    Order?      @relation(fields: [orderId], references: [id])
+  orderId  String?     @db.ObjectId
 }
 
 model UserPayment {

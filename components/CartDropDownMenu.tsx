@@ -1,19 +1,48 @@
 import { useCart } from '@/context/cartContext';
 import Image from 'next/image';
-import { useState } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import React, { useEffect, useRef, useState } from 'react';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 
 const CartDropdownMenu = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
   const { state, dispatch } = useCart();
+
+  const router = useRouter();
 
   const removeItem = (id: string) => {
     dispatch({ type: 'REMOVE_ITEM', payload: { id } });
   };
+
+  const totalAmount = state.items.reduce((acc, item) => {
+    return acc + item.price * item.quantity;
+  }, 0);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target as Node)
+    ) {
+      setIsDropdownOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+  const submitCart = async () => {
+    toggleDropdown();
+    if (state.items.length === 0) return;
+    router.push('/checkout');
+  };
   return (
-    <div className="relative">
+    <div className="relative" ref={dropdownRef}>
       <AiOutlineShoppingCart
         className="w-8 h-8 text-gray-600 cursor-pointer"
         onClick={toggleDropdown}
@@ -23,7 +52,9 @@ const CartDropdownMenu = () => {
       </div>
       {isDropdownOpen && (
         <div className="absolute right-0 z-10 top-10 flex flex-col p-2 space-y-2 rounded-md w-[500px] sm:p-10 bg-primary text-secondary border">
-          <h2 className="text-xl font-semibold">Your cart</h2>
+          <h2 className="text-xl font-semibold">
+            Your cart has {state.items.length} items
+          </h2>
           <ul className="flex flex-col divide-y divide-gray-700">
             {state.items.map((item) => (
               <li
@@ -44,15 +75,15 @@ const CartDropdownMenu = () => {
                         <h3 className="text-lg font-semibold leading-snug sm:pr-8">
                           {item.name}
                         </h3>
-                        <p className="text-sm text-gray-400">
+                        <p className="text-sm text-gray-600">
                           {item.description}
                         </p>
                       </div>
                       <div className="text-right">
-                        <p className="text-lg font-semibold">{item.price}€</p>
-                        <p className="text-sm text-gray-600 line-through">
-                          {item.quantity}
+                        <p className="text-lg font-semibold">
+                          INR {item.price}
                         </p>
+                        <p className="text-sm text-gray-600">{item.quantity}</p>
                       </div>
                     </div>
                     <div className="flex text-sm divide-x">
@@ -96,23 +127,23 @@ const CartDropdownMenu = () => {
           <div className="space-y-1 text-right">
             <p>
               Total amount:
-              <span className="font-semibold"></span>
-            </p>
-            <p className="text-sm text-gray-400">
-              Not including taxes and shipping costs
+              <span className="font-semibold"> {totalAmount} INR</span>
             </p>
           </div>
           <div className="flex justify-end space-x-4">
-            <button
-              type="button"
-              className="px-6 py-2 border rounded-md border-secondary hover:bg-red-500 hover:text-primary hover:border-none"
-            >
-              Back
-              <span className="sr-only sm:not-sr-only">to shop</span>
-            </button>
+            <Link href="/">
+              <button
+                type="button"
+                className="px-6 py-2 border rounded-md border-secondary hover:bg-red-500 hover:text-primary hover:border-none"
+              >
+                Back
+                <span className="sr-only sm:not-sr-only">to shop</span>
+              </button>
+            </Link>
             <button
               type="button"
               className="px-6 py-2 bg-red-500 border border-red-500 rounded-md text-primary"
+              onClick={submitCart}
             >
               <span className="sr-only sm:not-sr-only">Continue to</span>
               Checkout

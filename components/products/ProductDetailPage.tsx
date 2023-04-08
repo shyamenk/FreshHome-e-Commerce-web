@@ -1,11 +1,12 @@
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import { useCart } from '@/context/cartContext';
 import { CartItem } from '@/hooks/cartReducer';
 import Image from 'next/image';
 import { Product } from 'prisma/prisma-client';
 import { AiFillStar } from 'react-icons/ai';
 import Spinner from '../shared/Spinner';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
 
 type Props = {
   product: Product;
@@ -14,14 +15,44 @@ type Props = {
 const ProductDetailPage = ({ product }: Props) => {
   const { dispatch } = useCart();
   const [isLoading, setIsLoading] = useState(true);
+  const [quantity, setQuantity] = useState(1);
+  const { data: session } = useSession();
+
   const router = useRouter();
-  const addItem = (item: CartItem) => {
+
+  const addItem = async (item: CartItem) => {
     dispatch({ type: 'ADD_ITEM', payload: item });
+
+    if (session) {
+      await fetch(`${process.env.SERVER}/api/cart`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          total: item.price * item.quantity,
+          userId: session?.user.id,
+          cartItems: item
+        })
+      });
+    } else {
+      router.push('/login');
+    }
   };
 
   useEffect(() => {
     router.isReady && setIsLoading(false);
   }, [router.isReady]);
+
+  function incrementQty() {
+    setQuantity((prevValue) => prevValue + 1);
+  }
+
+  function decrementQty() {
+    if (quantity > 1) {
+      setQuantity((prevValue) => prevValue - 1);
+    }
+  }
 
   return (
     <>
@@ -66,22 +97,42 @@ const ProductDetailPage = ({ product }: Props) => {
                   </span>
                 </div>
 
-                <div className="flex items-center gap-4 mt-4 ">
-                  <label
-                    className="block mb-2 font-bold text-secondary"
-                    htmlFor="quantity"
+                <div className="flex items-center mt-4 space-x-3">
+                  <button
+                    onClick={decrementQty}
+                    className="p-1 rounded-full decrease__quantity ring-1 ring-gray-200"
                   >
-                    Quantity
-                  </label>
-                  <input
-                    type="number"
-                    id="quantity"
-                    name="quantity"
-                    min="1"
-                    max="10"
-                    defaultValue="0"
-                    className="block h-8 p-2 bg-white border border-gray-300 rounded-md"
-                  />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-4 h-4 text-gray-500"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M5 10a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1z"
+                        clipRule="evenodd"
+                      ></path>
+                    </svg>
+                  </button>
+                  <span className="quantity">{quantity}</span>
+                  <button
+                    onClick={incrementQty}
+                    className="p-1 rounded-full increase__quantity ring-1 ring-gray-200"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-4 h-4 text-gray-500"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                        clipRule="evenodd"
+                      ></path>
+                    </svg>
+                  </button>
                 </div>
                 <div className="mt-4">
                   <button
@@ -89,7 +140,7 @@ const ProductDetailPage = ({ product }: Props) => {
                       addItem({
                         id: product.id,
                         name: product.name,
-                        quantity: product.quantity,
+                        quantity: quantity,
                         price: product.price,
                         image: product.imageURL,
                         description: product.description

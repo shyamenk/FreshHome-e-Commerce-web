@@ -7,7 +7,7 @@ export type CartItem = {
   description: string;
 };
 
-type CartState = {
+export type CartState = {
   items: CartItem[];
 };
 
@@ -26,15 +26,13 @@ export const cartReducer = (state: CartState, action: CartAction) => {
         return {
           ...state,
           items: state.items.map((item) =>
-            item.id === action.payload.id
-              ? { ...item, quantity: item.quantity + 1 }
-              : item
+            item.id === action.payload.id ? { ...item } : item
           )
         };
       } else {
         return {
           ...state,
-          items: [...state.items, { ...action.payload, quantity: 1 }]
+          items: [...state.items, { ...action.payload }]
         };
       }
     }

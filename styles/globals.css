@@ -9,6 +9,9 @@
     @apply bg-primary antialiased;
   }
 }
+::-webkit-scrollbar {
+  display: none;
+}
 @layer base {
   [data-nextjs-scroll-focus-boundary] {
     display: contents;

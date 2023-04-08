@@ -26,6 +26,7 @@ const ProductListPage = ({ allProducts }: Props) => {
 
   return (
     <>
+      <div className="text-3xl font-bold text-center">Product Page</div>
       {/* <div className="grid grid-cols-1 gap-10 mt-8 lg:grid-cols-4 sm:grid-cols-3">
         {allProducts.products?.map(item => (
           <Link
