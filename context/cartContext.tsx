@@ -1,8 +1,6 @@
-import { createContext, useContext, useReducer } from 'react';
-import { cartReducer } from '@/hooks/cartReducer';
-import React, { ReactNode } from 'react';
+import { createContext, useState, useEffect } from 'react';
 
-type CartItem = {
+export type CartItem = {
   id: string;
   quantity: number;
   price: number;
@@ -10,37 +8,90 @@ type CartItem = {
   image: string;
   description: string;
 };
+interface CartContextProps {
+  cart: CartItem[];
+  addToCart: (item: CartItem) => void;
+  removeFromCart: (itemId: string) => void;
+  changeQuantity: (itemId: string, quantity: number) => void;
+  getTotal: () => number;
+}
 
-type CartState = {
-  items: CartItem[];
-};
-
-type Children = {
-  children?: ReactNode;
-};
-
-type CartAction =
-  | { type: 'ADD_ITEM'; payload: CartItem }
-  | { type: 'REMOVE_ITEM'; payload: { id: string } };
-
-type CartContextType = {
-  state: CartState;
-  dispatch: (action: CartAction) => void;
-};
-
-const CartContext = createContext<CartContextType>({
-  state: { items: [] },
+export const CartContext = createContext<CartContextProps>({
+  cart: [],
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  dispatch: () => {}
+  addToCart: () => {},
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  removeFromCart: () => {},
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  changeQuantity: () => {},
+  getTotal: () => 0
 });
+type Props = {
+  children: React.ReactNode;
+};
+const CART_KEY = 'cart';
 
-export const useCart = () => useContext(CartContext);
+export const CartProvider: React.FC<Props> = ({ children }) => {
+  const [cart, setCart] = useState<CartItem[]>([]);
 
-export const CartProvider = ({ children }: Children) => {
-  const [state, dispatch] = useReducer(cartReducer, { items: [] });
+  const addToCart = (item: CartItem) => {
+    const existingItemIndex = cart.findIndex(
+      (cartItem) => cartItem.id === item.id
+    );
+    if (existingItemIndex !== -1) {
+      const existingItem = cart[existingItemIndex];
+      const updatedItem = {
+        ...existingItem,
+        quantity: existingItem.quantity + item.quantity
+      };
+      const updatedCart = [...cart];
+      updatedCart.splice(existingItemIndex, 1, updatedItem);
+      setCart(updatedCart);
+      localStorage.setItem('cart', JSON.stringify(updatedCart));
+    } else {
+      const updatedCart = [...cart, item];
+      setCart(updatedCart);
+      localStorage.setItem('cart', JSON.stringify(updatedCart));
+    }
+  };
+
+  const removeFromCart = (itemId: string) => {
+    const itemIndex = cart.findIndex((item) => item.id === itemId);
+    if (itemIndex !== -1) {
+      const updatedCart = [...cart];
+      updatedCart.splice(itemIndex, 1);
+      setCart(updatedCart);
+      localStorage.setItem('cart', JSON.stringify(updatedCart));
+    }
+  };
+
+  const changeQuantity = (itemId: string, quantity: number) => {
+    const itemIndex = cart.findIndex((item) => item.id === itemId);
+    if (itemIndex !== -1) {
+      const existingItem = cart[itemIndex];
+      const updatedItem = { ...existingItem, quantity };
+      const updatedCart = [...cart];
+      updatedCart.splice(itemIndex, 1, updatedItem);
+      setCart(updatedCart);
+      localStorage.setItem('cart', JSON.stringify(updatedCart));
+    }
+  };
+
+  const getTotal = () => {
+    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
+  };
+
+  useEffect(() => {
+    const cartData = localStorage.getItem(CART_KEY);
+    if (cartData) {
+      setCart(JSON.parse(cartData));
+    }
+  }, []);
 
   return (
-    <CartContext.Provider value={{ state, dispatch }}>
+    <CartContext.Provider
+      value={{ cart, addToCart, removeFromCart, changeQuantity, getTotal }}
+    >
       {children}
     </CartContext.Provider>
   );

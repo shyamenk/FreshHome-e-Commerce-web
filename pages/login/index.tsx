@@ -39,7 +39,7 @@ const Login: NextPage = () => {
             </a>
           </div>
         </div>
-        <button className="block w-full p-3 font-bold text-center bg-yellow-500 rounded-lg text-secondary1">
+        <button className="block w-full p-3 font-bold text-center bg-red-500 rounded-lg hover:bg-red-600 text-primary">
           Sign in
         </button>
       </form>

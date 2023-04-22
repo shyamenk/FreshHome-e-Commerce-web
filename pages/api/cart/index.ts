@@ -1,10 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '@/lib/prisma';
 
-// type CartItem = {
-//   id: string;
-//   quantity: number;
-// };
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -16,30 +12,39 @@ export default async function handler(
       where: {
         userId: userId
       },
+      create: {
+        userId: userId,
+        total: total
+      },
       update: {
         total: {
           increment: total
         }
-      },
-      create: {
-        userId: userId,
-        total: total
       }
     });
+
     if (cartSession) {
-      await prisma.cart_Item.create({
-        data: {
+      await prisma.cart_Item.upsert({
+        where: {
+          productId: cartItems.id
+        },
+        create: {
           quantity: cartItems.quantity,
           sessionId: cartSession.id,
           productId: cartItems.id
         },
-        include: {
-          cart_Session: true
+        update: {
+          quantity: {
+            increment: cartItems.quantity
+          }
         }
       });
     }
-    res.status(200).json({
+    return res.status(200).json({
       cartSession
     });
   }
+
+  res.setHeader('Allow', ['POST']);
+  res.status(425).end(`Method ${req.method} is not allowed,`);
 }

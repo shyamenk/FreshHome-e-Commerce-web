@@ -31,6 +31,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       category: true
     }
   });
+
   return {
     props: {
       products

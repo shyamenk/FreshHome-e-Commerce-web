@@ -4,7 +4,7 @@ const CheckoutPage = () => {
   return (
     <>
       <main>
-        <h1 className="mt-10 text-3xl font-semibold text-center text-gray-400">
+        <h1 className="h-screen mt-10 text-3xl font-semibold text-center text-secondary1">
           Stripe Checkout Page
         </h1>
       </main>

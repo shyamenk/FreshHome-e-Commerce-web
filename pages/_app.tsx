@@ -1,12 +1,12 @@
 import '../styles/globals.css';
 import { SessionProvider } from 'next-auth/react';
 import MainLayout from '@/components/layout/MainLayout';
-// import { usePageLoading } from '@/hooks/usePageLoading';
-// import Spinner from '@/components/shared/Spinner';
+
 import { AppProps } from 'next/app';
 import { ReactElement, ReactNode } from 'react';
 import { NextPage } from 'next';
 import { CartProvider } from '@/context/cartContext';
+import Footer from '@/components/layout/Footer';
 
 export type NextPageWithLayout<> = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -22,7 +22,10 @@ export const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   return (
     <CartProvider>
       <SessionProvider session={pageProps.session}>
-        <MainLayout>{getLayout(<Component {...pageProps} />)}</MainLayout>
+        <MainLayout>
+          {getLayout(<Component {...pageProps} />)}
+          <Footer />
+        </MainLayout>
       </SessionProvider>
     </CartProvider>
   );

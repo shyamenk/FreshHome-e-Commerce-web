@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Hero from '@/components/layout/HeroSection';
 import Feature from '@/components/layout/CategoryList';
 
-// #TODO
+// TODO: ADD NEXT FONTS to AVOID Layout Shift
 
 // const inter = Inter({subsets: ['latin']})
 

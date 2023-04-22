@@ -1,26 +1,22 @@
-import { useCart } from '@/context/cartContext';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useEffect, useRef, useState } from 'react';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
+import { CartContext } from '@/context/cartContext';
 
 const CartDropdownMenu = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
-  const { state, dispatch } = useCart();
 
   const router = useRouter();
+  const { cart, removeFromCart, getTotal } = useContext(CartContext);
 
-  const removeItem = (id: string) => {
-    dispatch({ type: 'REMOVE_ITEM', payload: { id } });
+  const removeItem = async (id: string) => {
+    removeFromCart(id);
   };
 
-  const totalAmount = state.items.reduce((acc, item) => {
-    return acc + item.price * item.quantity;
-  }, 0);
   const dropdownRef = useRef<HTMLDivElement>(null);
-
   const handleClickOutside = (event: MouseEvent) => {
     if (
       dropdownRef.current &&
@@ -36,11 +32,13 @@ const CartDropdownMenu = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
   const submitCart = async () => {
     toggleDropdown();
-    if (state.items.length === 0) return;
+    if (cart.length === 0) return;
     router.push('/checkout');
   };
+
   return (
     <div className="relative" ref={dropdownRef}>
       <AiOutlineShoppingCart
@@ -48,15 +46,15 @@ const CartDropdownMenu = () => {
         onClick={toggleDropdown}
       />
       <div className="absolute right-0 px-1 text-xs text-white bg-red-600 rounded-full -top-1">
-        {state.items.length}
+        {cart?.length}
       </div>
       {isDropdownOpen && (
         <div className="absolute right-0 z-10 top-10 flex flex-col p-2 space-y-2 rounded-md w-[500px] sm:p-10 bg-primary text-secondary border">
           <h2 className="text-xl font-semibold">
-            Your cart has {state.items.length} items
+            Your cart has {cart?.length} items
           </h2>
           <ul className="flex flex-col divide-y divide-gray-700">
-            {state.items.map((item) => (
+            {cart?.map((item) => (
               <li
                 key={item.id}
                 className="flex flex-col py-2 sm:flex-row sm:justify-between"
@@ -64,7 +62,7 @@ const CartDropdownMenu = () => {
                 <div className="flex w-full space-x-2 sm:space-x-4">
                   <Image
                     className="flex-shrink-0 object-cover w-20 h-20 bg-gray-500 border-transparent rounded outline-none sm:w-32 sm:h-32"
-                    alt="Polaroid camera"
+                    alt="product-image"
                     src={item.image}
                     height={200}
                     width={200}
@@ -81,9 +79,11 @@ const CartDropdownMenu = () => {
                       </div>
                       <div className="text-right">
                         <p className="text-lg font-semibold">
-                          INR {item.price}
+                          INR {item?.price}
                         </p>
-                        <p className="text-sm text-gray-600">{item.quantity}</p>
+                        <p className="text-sm text-gray-600">
+                          {item?.quantity}
+                        </p>
                       </div>
                     </div>
                     <div className="flex text-sm divide-x">
@@ -126,13 +126,14 @@ const CartDropdownMenu = () => {
           </ul>
           <div className="space-y-1 text-right">
             <p>
-              Total amount:
-              <span className="font-semibold"> {totalAmount} INR</span>
+              Total amount:{getTotal()}
+              <span className="font-semibold"> </span>
             </p>
           </div>
           <div className="flex justify-end space-x-4">
             <Link href="/">
               <button
+                onClick={() => toggleDropdown}
                 type="button"
                 className="px-6 py-2 border rounded-md border-secondary hover:bg-red-500 hover:text-primary hover:border-none"
               >

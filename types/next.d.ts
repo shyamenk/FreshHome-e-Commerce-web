@@ -1,22 +1,22 @@
 import type {
   NextComponentType,
   NextPageContext,
-  NextLayoutComponentType,
-} from "next";
-import type { AppProps } from "next/app";
+  NextLayoutComponentType
+} from 'next';
+import type { AppProps } from 'next/app';
 
-declare module "next" {
-  type NextLayoutComponentType<P = {}> = NextComponentType<
+declare module 'next' {
+  type NextLayoutComponentType<P> = NextComponentType<
     NextPageContext,
-    any,
+    unknown,
     P
   > & {
     getLayout?: (page: ReactNode) => ReactNode;
   };
 }
 
-declare module "next/app" {
-  type AppLayoutProps<P = {}> = AppProps & {
+declare module 'next/app' {
+  type AppLayoutProps = AppProps & {
     Component: NextLayoutComponentType;
   };
 }

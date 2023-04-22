@@ -1,41 +1,28 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useCart } from '@/context/cartContext';
-import { CartItem } from '@/hooks/cartReducer';
+import { CartItem } from '@/context/cartContext';
 import Image from 'next/image';
 import { Product } from 'prisma/prisma-client';
 import { AiFillStar } from 'react-icons/ai';
 import Spinner from '../shared/Spinner';
 import { useSession } from 'next-auth/react';
+import { CartContext } from '@/context/cartContext';
 
 type Props = {
   product: Product;
 };
 
 const ProductDetailPage = ({ product }: Props) => {
-  const { dispatch } = useCart();
   const [isLoading, setIsLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
   const { data: session } = useSession();
 
   const router = useRouter();
+  const { addToCart } = useContext(CartContext);
 
-  const addItem = async (item: CartItem) => {
-    dispatch({ type: 'ADD_ITEM', payload: item });
-
-    if (session) {
-      await fetch(`${process.env.SERVER}/api/cart`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          total: item.price * item.quantity,
-          userId: session?.user.id,
-          cartItems: item
-        })
-      });
-    } else {
+  const handleAddToCart = async (item: CartItem) => {
+    addToCart(item);
+    if (!session) {
       router.push('/login');
     }
   };
@@ -137,7 +124,7 @@ const ProductDetailPage = ({ product }: Props) => {
                 <div className="mt-4">
                   <button
                     onClick={() =>
-                      addItem({
+                      handleAddToCart({
                         id: product.id,
                         name: product.name,
                         quantity: quantity,
