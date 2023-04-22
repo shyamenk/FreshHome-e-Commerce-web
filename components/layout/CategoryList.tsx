@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import useSWR from 'swr';
-import fetcher from 'util/fetcher';
+import fetcher from '@/utils/fetcher';
 import { ErrorResponse } from 'types/error';
 import Link from 'next/link';
 

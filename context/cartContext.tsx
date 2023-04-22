@@ -14,6 +14,7 @@ interface CartContextProps {
   removeFromCart: (itemId: string) => void;
   changeQuantity: (itemId: string, quantity: number) => void;
   getTotal: () => number;
+  clearCart: () => void;
 }
 
 export const CartContext = createContext<CartContextProps>({
@@ -24,7 +25,9 @@ export const CartContext = createContext<CartContextProps>({
   removeFromCart: () => {},
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   changeQuantity: () => {},
-  getTotal: () => 0
+  getTotal: () => 0,
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  clearCart: () => {}
 });
 type Props = {
   children: React.ReactNode;
@@ -80,6 +83,10 @@ export const CartProvider: React.FC<Props> = ({ children }) => {
   const getTotal = () => {
     return cart.reduce((total, item) => total + item.price * item.quantity, 0);
   };
+  const clearCart = () => {
+    setCart([]);
+    localStorage.removeItem(CART_KEY);
+  };
 
   useEffect(() => {
     const cartData = localStorage.getItem(CART_KEY);
@@ -90,7 +97,14 @@ export const CartProvider: React.FC<Props> = ({ children }) => {
 
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, removeFromCart, changeQuantity, getTotal }}
+      value={{
+        cart,
+        addToCart,
+        removeFromCart,
+        changeQuantity,
+        getTotal,
+        clearCart
+      }}
     >
       {children}
     </CartContext.Provider>

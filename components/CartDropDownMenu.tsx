@@ -1,22 +1,23 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { CartContext } from '@/context/cartContext';
+import { getStripe } from '@/utils/stripe';
+
+type Props = {
+  id: string;
+};
 
 const CartDropdownMenu = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [session, setSession] = useState<Props | null>();
+
+  const { cart, removeFromCart, getTotal } = useContext(CartContext);
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
 
-  const router = useRouter();
-  const { cart, removeFromCart, getTotal } = useContext(CartContext);
-
-  const removeItem = async (id: string) => {
-    removeFromCart(id);
-  };
-
   const dropdownRef = useRef<HTMLDivElement>(null);
+
   const handleClickOutside = (event: MouseEvent) => {
     if (
       dropdownRef.current &&
@@ -25,7 +26,6 @@ const CartDropdownMenu = () => {
       setIsDropdownOpen(false);
     }
   };
-
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
@@ -33,10 +33,38 @@ const CartDropdownMenu = () => {
     };
   }, []);
 
-  const submitCart = async () => {
+  const removeItem = async (id: string) => {
+    removeFromCart(id);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ items: cart })
+      });
+      const session = await response.json();
+      setSession(session);
+    };
+    if (cart.length) fetchData();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cart]);
+
+  const checkoutHandler = async () => {
     toggleDropdown();
-    if (cart.length === 0) return;
-    router.push('/checkout');
+    const stripe = await getStripe();
+    if (cart.length === 0 || !session) return; // add check for session
+    const result = await stripe?.redirectToCheckout({
+      sessionId: session.id
+    });
+
+    if (result?.error) {
+      console.log(result.error.message);
+    }
   };
 
   return (
@@ -144,7 +172,7 @@ const CartDropdownMenu = () => {
             <button
               type="button"
               className="px-6 py-2 bg-red-500 border border-red-500 rounded-md text-primary"
-              onClick={submitCart}
+              onClick={checkoutHandler}
             >
               <span className="sr-only sm:not-sr-only">Continue to</span>
               Checkout

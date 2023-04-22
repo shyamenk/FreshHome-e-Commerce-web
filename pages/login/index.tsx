@@ -1,9 +1,17 @@
 import { NextPage } from 'next';
 import { signIn } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 const Login: NextPage = () => {
+  const { data: session } = useSession();
+
+  const router = useRouter();
+  if (session) {
+    router.push('/');
+  }
   return (
-    <div className="w-full max-w-md p-8 mx-auto mt-10 space-y-3 border rounded-xl ">
+    <div className="w-full max-w-md p-8 mx-auto mt-10 mb-4 space-y-3 border rounded-xl ">
       <h1 className="text-2xl font-bold text-center">Please Login</h1>
       <form
         // novalidate=""
