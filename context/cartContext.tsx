@@ -70,10 +70,12 @@ export const CartProvider: React.FC<Props> = ({ children }) => {
 
   const changeQuantity = (itemId: string, quantity: number) => {
     const itemIndex = cart.findIndex((item) => item.id === itemId);
+
     if (itemIndex !== -1) {
       const existingItem = cart[itemIndex];
       const updatedItem = { ...existingItem, quantity };
       const updatedCart = [...cart];
+      console.log(updatedCart);
       updatedCart.splice(itemIndex, 1, updatedItem);
       setCart(updatedCart);
       localStorage.setItem('cart', JSON.stringify(updatedCart));

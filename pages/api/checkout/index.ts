@@ -23,8 +23,8 @@ export default async function handler(
         currency: 'inr',
         product_data: {
           name: item.name,
-          description: item.description,
-          images: [item.image]
+          images: [item.image],
+          description: item.description
         },
         unit_amount: item.price * 100
       },
@@ -35,8 +35,9 @@ export default async function handler(
       const session = await stripe.checkout.sessions.create({
         mode: 'payment',
         line_items: lineItems,
-        success_url: `${req.headers.origin}/success`,
-        cancel_url: `${req.headers.origin}/cancel`
+        success_url: `${req.headers.origin}/success?sessionId={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${req.headers.origin}`,
+        billing_address_collection: 'required'
       });
       res.status(200).json({ id: session.id });
     } catch (error) {

@@ -1,11 +1,7 @@
 import Success from '@/components/checkout/Success';
 
 const index = () => {
-  return (
-    <div>
-      <Success />
-    </div>
-  );
+  return <Success />;
 };
 
 export default index;

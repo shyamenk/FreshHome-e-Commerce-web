@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
-import DropDownMenu from '../DropDown';
+import DropDownMenu from '@/components/DropDown';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import Spinner from '../shared/Spinner';
-import CartDropdownMenu from '../CartDropDownMenu';
+import CartDropdownMenu from '@/components/cart/CartDropDownMenu';
 
 const NavBar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);

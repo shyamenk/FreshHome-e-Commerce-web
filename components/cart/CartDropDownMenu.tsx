@@ -3,20 +3,16 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { CartContext } from '@/context/cartContext';
-import { getStripe } from '@/utils/stripe';
-
-type Props = {
-  id: string;
-};
+import { useRouter } from 'next/router';
 
 const CartDropdownMenu = () => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [session, setSession] = useState<Props | null>();
-
   const { cart, removeFromCart, getTotal } = useContext(CartContext);
-  const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
 
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const router = useRouter();
 
   const handleClickOutside = (event: MouseEvent) => {
     if (
@@ -33,40 +29,14 @@ const CartDropdownMenu = () => {
     };
   }, []);
 
-  const removeItem = async (id: string) => {
+  const removeItem = (id: string) => {
     removeFromCart(id);
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch('/api/checkout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ items: cart })
-      });
-      const session = await response.json();
-      setSession(session);
-    };
-    if (cart.length) fetchData();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cart]);
-
-  const checkoutHandler = async () => {
+  const placeOrderHandler = () => {
     toggleDropdown();
-    const stripe = await getStripe();
-    if (cart.length === 0 || !session) return; // add check for session
-    const result = await stripe?.redirectToCheckout({
-      sessionId: session.id
-    });
-
-    if (result?.error) {
-      console.log(result.error.message);
-    }
+    router.push('/order');
   };
-
   return (
     <div className="relative" ref={dropdownRef}>
       <AiOutlineShoppingCart
@@ -159,7 +129,7 @@ const CartDropdownMenu = () => {
             </p>
           </div>
           <div className="flex justify-end space-x-4">
-            <Link href="/">
+            <Link href="/categories">
               <button
                 onClick={() => toggleDropdown}
                 type="button"
@@ -172,10 +142,9 @@ const CartDropdownMenu = () => {
             <button
               type="button"
               className="px-6 py-2 bg-red-500 border border-red-500 rounded-md text-primary"
-              onClick={checkoutHandler}
+              onClick={placeOrderHandler}
             >
-              <span className="sr-only sm:not-sr-only">Continue to</span>
-              Checkout
+              <span className="sr-only sm:not-sr-only">Place Order</span>
             </button>
           </div>
         </div>

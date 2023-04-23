@@ -1,7 +1,7 @@
 import { GetServerSideProps } from 'next';
 import { prisma } from '../../lib/prisma/index';
 import { Category, Product } from 'prisma/prisma-client';
-import ProductsByCategory from '@/components/products/ProductsByCategory';
+import ProductsByCategory from '@/components/category/ProductsByCategory';
 import { Suspense } from 'react';
 
 type Props = {
