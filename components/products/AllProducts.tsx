@@ -59,7 +59,7 @@ const AllProducts = ({ allProducts }: AllProductProps) => {
           <Link
             key={item.id}
             href={{
-              pathname: `categories/${item.name}`,
+              pathname: `products/${item.name}`,
               query: { productId: item.id }
             }}
           >
