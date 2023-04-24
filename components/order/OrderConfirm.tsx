@@ -88,6 +88,7 @@ const OrderConfirm = () => {
                   src={item.image}
                   height={200}
                   width={200}
+                  priority
                 />
                 <div className="flex flex-col justify-between w-full pb-4">
                   <div className="flex justify-between w-full pb-2 space-x-2">
@@ -175,7 +176,7 @@ const OrderConfirm = () => {
               </p>
             </div>
             <div className="flex justify-end space-x-4">
-              <Link href={'/'}>
+              <Link href="/">
                 <button
                   type="button"
                   className="px-6 py-2 border rounded-md border-secondary hover:bg-red-500 hover:text-primary hover:border-none"

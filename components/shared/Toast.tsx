@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import { NextPage } from "next";
+import React, { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import { NextPage } from 'next';
 
 interface IProps {
   message: string;
@@ -13,7 +13,7 @@ const Toast: NextPage<IProps> = ({ message }) => {
   };
 
   useEffect(() => {
-    const timeoutId = setTimeout(hideToast, 5000);
+    const timeoutId = setTimeout(hideToast, 2000);
     return () => clearTimeout(timeoutId);
   }, []);
 
@@ -23,10 +23,10 @@ const Toast: NextPage<IProps> = ({ message }) => {
 
   return (
     <motion.div
-      initial={{ y: "-100%" }}
-      animate={{ y: 0 }}
-      exit={{ y: "-100%" }}
-      className="p-4 text-white bg-red-500 rounded-md shadow-md"
+      // initial={{ y: '-100%' }}
+      // animate={{ y: 0 }}
+      // exit={{ y: '-100%' }}
+      className="p-4 mx-auto text-white bg-green-500 rounded-md shadow-md "
     >
       {message}
     </motion.div>

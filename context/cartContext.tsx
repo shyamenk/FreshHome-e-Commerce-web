@@ -1,13 +1,15 @@
-import { createContext, useState, useEffect } from 'react';
+/* eslint-disable @typescript-eslint/no-empty-function */
+import { createContext, useState, useEffect, useCallback } from 'react';
 
-export type CartItem = {
+export interface CartItem {
   id: string;
   quantity: number;
   price: number;
   name: string;
   image: string;
   description: string;
-};
+}
+
 interface CartContextProps {
   cart: CartItem[];
   addToCart: (item: CartItem) => void;
@@ -19,76 +21,92 @@ interface CartContextProps {
 
 export const CartContext = createContext<CartContextProps>({
   cart: [],
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   addToCart: () => {},
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   removeFromCart: () => {},
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   changeQuantity: () => {},
   getTotal: () => 0,
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   clearCart: () => {}
 });
-type Props = {
+
+interface Props {
   children: React.ReactNode;
-};
+}
+
 const CART_KEY = 'cart';
 
 export const CartProvider: React.FC<Props> = ({ children }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
 
-  const addToCart = (item: CartItem) => {
-    const existingItemIndex = cart.findIndex(
-      (cartItem) => cartItem.id === item.id
-    );
-    if (existingItemIndex !== -1) {
-      const existingItem = cart[existingItemIndex];
-      const updatedItem = {
-        ...existingItem,
-        quantity: existingItem.quantity + item.quantity
-      };
-      const updatedCart = [...cart];
-      updatedCart.splice(existingItemIndex, 1, updatedItem);
-      setCart(updatedCart);
-      localStorage.setItem('cart', JSON.stringify(updatedCart));
-    } else {
-      const updatedCart = [...cart, item];
-      setCart(updatedCart);
-      localStorage.setItem('cart', JSON.stringify(updatedCart));
-    }
-  };
+  const saveCartToLocalStorage = useCallback((cart: CartItem[]) => {
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+  }, []);
 
-  const removeFromCart = (itemId: string) => {
-    const itemIndex = cart.findIndex((item) => item.id === itemId);
-    if (itemIndex !== -1) {
-      const updatedCart = [...cart];
-      updatedCart.splice(itemIndex, 1);
+  const handleCartChange = useCallback(
+    (updatedCart: CartItem[]) => {
       setCart(updatedCart);
-      localStorage.setItem('cart', JSON.stringify(updatedCart));
-    }
-  };
+      saveCartToLocalStorage(updatedCart);
+    },
+    [saveCartToLocalStorage]
+  );
 
-  const changeQuantity = (itemId: string, quantity: number) => {
-    const itemIndex = cart.findIndex((item) => item.id === itemId);
+  const addToCart = useCallback(
+    (item: CartItem) => {
+      const existingItemIndex = cart.findIndex(
+        (cartItem) => cartItem.id === item.id
+      );
 
-    if (itemIndex !== -1) {
-      const existingItem = cart[itemIndex];
-      const updatedItem = { ...existingItem, quantity };
-      const updatedCart = [...cart];
-      console.log(updatedCart);
-      updatedCart.splice(itemIndex, 1, updatedItem);
-      setCart(updatedCart);
-      localStorage.setItem('cart', JSON.stringify(updatedCart));
-    }
-  };
+      if (existingItemIndex !== -1) {
+        const existingItem = cart[existingItemIndex];
+        const updatedItem = {
+          ...existingItem,
+          quantity: existingItem.quantity + item.quantity
+        };
+        const updatedCart = [...cart];
+        updatedCart.splice(existingItemIndex, 1, updatedItem);
+        handleCartChange(updatedCart);
+      } else {
+        const updatedCart = [...cart, item];
+        handleCartChange(updatedCart);
+      }
+    },
+    [cart, handleCartChange]
+  );
 
-  const getTotal = () => {
+  const removeFromCart = useCallback(
+    (itemId: string) => {
+      const itemIndex = cart.findIndex((item) => item.id === itemId);
+      if (itemIndex !== -1) {
+        const updatedCart = [...cart];
+        updatedCart.splice(itemIndex, 1);
+        handleCartChange(updatedCart);
+      }
+    },
+    [cart, handleCartChange]
+  );
+
+  const changeQuantity = useCallback(
+    (itemId: string, quantity: number) => {
+      const itemIndex = cart.findIndex((item) => item.id === itemId);
+
+      if (itemIndex !== -1) {
+        const existingItem = cart[itemIndex];
+        const updatedItem = { ...existingItem, quantity };
+        const updatedCart = [...cart];
+        updatedCart.splice(itemIndex, 1, updatedItem);
+        handleCartChange(updatedCart);
+      }
+    },
+    [cart, handleCartChange]
+  );
+
+  const getTotal = useCallback(() => {
     return cart.reduce((total, item) => total + item.price * item.quantity, 0);
-  };
-  const clearCart = () => {
+  }, [cart]);
+
+  const clearCart = useCallback(() => {
     setCart([]);
     localStorage.removeItem(CART_KEY);
-  };
+  }, []);
 
   useEffect(() => {
     const cartData = localStorage.getItem(CART_KEY);

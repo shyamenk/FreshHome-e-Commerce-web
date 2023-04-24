@@ -39,6 +39,7 @@ export default async function handler(
         cancel_url: `${req.headers.origin}`,
         billing_address_collection: 'auto'
       });
+
       res.status(200).json({ id: session.id });
     } catch (error) {
       console.log(error);

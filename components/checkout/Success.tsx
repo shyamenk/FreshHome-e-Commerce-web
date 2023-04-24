@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import useSWR from 'swr';
 import fetcher from '@/utils/fetcher';
 import { CartContext } from '@/context/cartContext';
+import Toast from '../shared/Toast';
 // import Image from 'next/image';
 
 interface LineItem {
@@ -73,6 +74,7 @@ function Success() {
           <p className="mt-2 mb-4 text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:p-0">
             Payment successful
           </p>
+          <Toast message=" Payment successful" />
           <p className="text-base font-semibold text-gray-700">
             We appreciate your order, we’re currently processing it. So hang
             tight and we’ll send you confirmation very soon!
